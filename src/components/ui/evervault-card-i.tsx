@@ -7,13 +7,9 @@ import { cn } from "@/utils/cn";
 export const EvervaultCard = ({
   text,
   className,
-  colorStart,
-  colorEnd,
 }: {
   text?: string;
   className?: string;
-  colorStart?: string;
-  colorEnd?: string;
 }) => {
   let mouseX = useMotionValue(0);
   let mouseY = useMotionValue(0);
@@ -49,8 +45,6 @@ export const EvervaultCard = ({
           mouseX={mouseX}
           mouseY={mouseY}
           randomString={randomString}
-          colorStart={colorStart}
-          colorEnd={colorEnd}
         />
         <div className="relative z-10 flex items-center justify-center">
           <div className="relative h-44 w-44  rounded-full flex items-center justify-center text-white font-bold text-4xl">
@@ -63,7 +57,7 @@ export const EvervaultCard = ({
   );
 };
 
-export function CardPattern({ mouseX, mouseY, randomString, colorStart, colorEnd }: any) {
+export function CardPattern({ mouseX, mouseY, randomString }: any) {
   let maskImage = useMotionTemplate`radial-gradient(250px at ${mouseX}px ${mouseY}px, white, transparent)`;
   let style = { maskImage, WebkitMaskImage: maskImage };
 
@@ -71,11 +65,11 @@ export function CardPattern({ mouseX, mouseY, randomString, colorStart, colorEnd
     <div className="pointer-events-none">
       <div className="absolute inset-0 rounded-2xl  [mask-image:linear-gradient(white,transparent)] group-hover/card:opacity-50"></div>
       <motion.div
-        className={`absolute inset-0 rounded-2xl bg-gradient-to-r from-${colorStart} to-${colorEnd} opacity-0  group-hover/card:opacity-100 backdrop-blur-xl transition duration-500`}
+        className="absolute inset-0 rounded-2xl bg-gradient-to-r from-yellow-500 to-blue-200 opacity-1 md:opacity-0  group-hover/card:opacity-100 backdrop-blur-xl transition duration-500"
         style={style}
       />
       <motion.div
-        className="absolute inset-0 rounded-2xl opacity-0 mix-blend-overlay  group-hover/card:opacity-100"
+        className="absolute inset-0 rounded-2xl opacity-1 md:opacity-0 mix-blend-overlay  group-hover/card:opacity-100"
         style={style}
       >
         <p className="absolute inset-x-0 text-xs h-full break-words whitespace-pre-wrap text-white font-mono font-bold transition duration-500">
