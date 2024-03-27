@@ -9,7 +9,7 @@ import { BoxesGrid } from "@/components/ui/boxesGrid";
 export default function Home() {
   return (
     <div>
-      <Head> <title>Alma</title> </Head>
+      <Head> <title>Almaa</title> </Head>
       <main>
         <BoxesGrid />
         <HeroScroll />
