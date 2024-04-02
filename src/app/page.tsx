@@ -5,6 +5,7 @@ import { EvervaultCardIsti } from "@/components/elements/evervaultIsti";
 import { EvervaultCardAbel } from "@/components/elements/evervaultAbel";
 import { AboutSection } from "@/components/elements/about";
 import { BoxesGrid } from "@/components/ui/boxesGrid";
+import {Pricing} from "@/components/elements/pricing";
 
 export default function Home() {
   return (
@@ -23,6 +24,7 @@ export default function Home() {
           <EvervaultCardAbel />
         </div>
         <AboutSection />
+        <Pricing />
       </main>
     </div>
   );
