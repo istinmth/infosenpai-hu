@@ -6,12 +6,14 @@ import { EvervaultCardAbel } from "@/components/elements/evervaultAbel";
 import { AboutSection } from "@/components/elements/about";
 import { BoxesGrid } from "@/components/ui/boxesGrid";
 import {Pricing} from "@/components/elements/pricing";
+import {Navbar} from "@/components/ui/navlinks"
 
 export default function Home() {
   return (
     <div>
       <Head> <title>Almaa</title> </Head>
       <main>
+        <Navbar />
         <BoxesGrid />
         <HeroScroll />
         <BentoGridSubjects />

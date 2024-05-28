@@ -11,7 +11,7 @@ export function HeroScroll() {
           <>
             <h1 className="text-4xl font-semibold text-black dark:text-white">
               Készülj velünk <br />
-              <span className="text-4xl md:text-[6rem] font-bold mt-1 leading-none">
+              <span className="text-4xl md:text-[6rem] font-bold mt-1 leading-none text-blue-600">
                 Az infóérettségire!
               </span>
             </h1>
