@@ -4,7 +4,7 @@ import { FlipWords } from "../ui/flip-words";
 import Button from "@/components/elements/Button";
 
 export function FlipWordsDemo() {
-    const words = ["infóérettségi", "ECDL-vizsga", "egyetem", ""];
+    const words = ["infóérettségi,", "ECDL-vizsga,", "egyetem,", ""];
 
     return (
         <div className="h-[40rem] flex justify-center items-center px-4">
@@ -27,7 +27,7 @@ export function FlipWordsDemo() {
                 </p>
                 <div className="py-5 flex items-center justify-center">
                     <Button
-                        className="px-4 py-2 rounded-md"
+                        className="px-4 py-2 rounded-md font-new-york"
                         onClick={() => console.log('Button clicked!')}
                     >
                         Nézzük!
