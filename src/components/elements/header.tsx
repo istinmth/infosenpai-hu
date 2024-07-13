@@ -10,7 +10,7 @@ export function FlipWordsDemo() {
         <div className="h-[40rem] flex justify-center items-center px-4">
             <div className="text-center">
                 <p className="text-5xl font-normal text-neutral-600 dark:text-neutral-400">
-                    <span className="font-medium text-blue-600">
+                    <span className="font-medium text-amber-500">
                         Ez az oldal olyan egyszerű,
                         <br/>
                         mint neked lesz az
@@ -21,14 +21,13 @@ export function FlipWordsDemo() {
                         className="inline-block font-medium text-black dark:text-white"
                     />
                     <br/>
-                    <span className="font-medium text-pink-600">
+                    <span className="font-medium text-violet-600">
                         ha eljössz az óráinkra
                     </span>
                 </p>
                 <div className="py-5 flex items-center justify-center">
                     <Button
-                        className="px-4 py-2 rounded-md font-new-york"
-                        onClick={() => console.log('Button clicked!')}
+                        className="px-4 py-2 rounded-md"
                     >
                         Nézzük!
                     </Button>

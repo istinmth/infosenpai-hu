@@ -1,7 +1,7 @@
 "use client";
 
 import React from 'react';
-import AnimatedFlightButton from '../ui/animated-modal';
+import AnimatedFlightButton from '../ui/button';
 
 interface ClientAnimatedFlightButtonProps {
     children: React.ReactNode;
