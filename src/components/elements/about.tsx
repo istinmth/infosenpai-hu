@@ -1,5 +1,4 @@
 import { CloudArrowUpIcon, LockClosedIcon, ServerIcon } from '@heroicons/react/20/solid'
-import { BoxesGrid } from '../ui/boxesGrid'
 
 export function AboutSection() {
   return (
