@@ -1,35 +1,35 @@
 import { cn } from "@/utils/cn";
-
+import React from "react";
 import {
-  IconAdjustmentsBolt,
+  IconDatabase,
   IconCloud,
+  IconFileSpreadsheet,
   IconCurrencyDollar,
-  IconEaseInOut,
+  IconFileText,
   IconHeart,
   IconHelp,
   IconRouteAltLeft,
-  IconTerminal2,
 } from "@tabler/icons-react";
 
 export function BentoGrid() {
   const features = [
     {
-      title: "Built for developers",
+      title: "Adatbázis-kezelés",
       description:
-          "Built for engineers, developers, dreamers, thinkers and doers.",
-      icon: <IconTerminal2 />,
+          "Egyetemen sokaknak ez az egyik legnehezebb tantárgy, mert nem értették meg sosem az alapokat. Az adatbáziskezelés ugyanis nem Microsoft Access-ben táblák kötögetéséről szól. Megtanulsz SQL nyelven lekérdezéseket írni és beszélünk más, nem relációs adatbázisokról is.",
+      icon: <IconDatabase />,
     },
     {
-      title: "Ease of use",
+      title: "Táblázatkezelés",
       description:
-          "It's as easy as using an Apple, and as expensive as buying one.",
-      icon: <IconEaseInOut />,
+          "Az egyik legérdekesebb rész, ahol segítünk neked, hogy az átlagos excel-felhasználótól eltérően te több, mint 5-10%-át használd a funkcióknak. Meg persze elmondunk mindent, amit tudni kell a függvényekről, diagramokról, pivot-táblákról és makrókról.   ",
+      icon: <IconFileSpreadsheet />,
     },
     {
-      title: "Pricing like no other",
+      title: "Szövegszerkesztés",
       description:
-          "Our prices are best in the market. No cap, no lock, no credit card required.",
-      icon: <IconCurrencyDollar />,
+          "Tudtad, hogy a CAPS LOCK használata nem eredményez nagybetűs betűstílust és ezért pontlevonás jár? Az ilyen és hasonló baklövések elkerüléséhez csupa hasznos tanáccsal és extra mennyiségű tabulátorral készültünk nektek!",
+      icon: <IconFileText />,
     },
     {
       title: "100% Uptime guarantee",
@@ -51,7 +51,7 @@ export function BentoGrid() {
       title: "Money back guarantee",
       description:
           "If you donot like EveryAI, we will convince you to like us.",
-      icon: <IconAdjustmentsBolt />,
+      icon: <IconCloud />,
     },
     {
       title: "And everything else",
@@ -60,10 +60,12 @@ export function BentoGrid() {
     },
   ];
   return (
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4  relative z-10 py-10 max-w-7xl mx-auto">
-        {features.map((feature, index) => (
-            <Feature key={feature.title} {...feature} index={index} />
-        ))}
+      <div className="flex justify-center w-full py-10 px-4 lg:px-0">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 lg:gap-8 relative z-10 max-w-5xl w-full">
+          {features.map((feature, index) => (
+              <Feature key={feature.title} {...feature} index={index} />
+          ))}
+        </div>
       </div>
   );
 }
@@ -82,27 +84,20 @@ const Feature = ({
   return (
       <div
           className={cn(
-              "flex flex-col lg:border-r  py-10 relative group/feature dark:border-neutral-800",
-              (index === 0 || index === 4) && "lg:border-l dark:border-neutral-800",
-              index < 4 && "lg:border-b dark:border-neutral-800"
+              "flex flex-col py-6 px-4 lg:py-8 lg:px-6 relative group/feature bg-whitesmoke dark:bg-neutral-900 rounded-lg transition-all duration-200"
           )}
       >
-        {index < 4 && (
-            <div className="opacity-0 group-hover/feature:opacity-100 transition duration-200 absolute inset-0 h-full w-full bg-gradient-to-t from-neutral-100 dark:from-neutral-800 to-transparent pointer-events-none" />
-        )}
-        {index >= 4 && (
-            <div className="opacity-0 group-hover/feature:opacity-100 transition duration-200 absolute inset-0 h-full w-full bg-gradient-to-b from-neutral-100 dark:from-neutral-800 to-transparent pointer-events-none" />
-        )}
-        <div className="mb-4 relative z-10 px-10 text-neutral-600 dark:text-neutral-400">
-          {icon}
+        <div className="opacity-0 group-hover/feature:opacity-100 transition duration-200 absolute inset-0 h-full w-full bg-gradient-to-b from-neutral-100 dark:from-neutral-800 to-transparent pointer-events-none rounded-lg" />
+        <div className="mb-2 lg:mb-3 relative z-10 text-neutral-600 dark:text-neutral-400">
+          {React.cloneElement(icon as React.ReactElement, { className: 'w-6 h-6 lg:w-8 lg:h-8' })}
         </div>
-        <div className="text-lg font-bold mb-2 relative z-10 px-10">
-          <div className="absolute left-0 inset-y-0 h-6 group-hover/feature:h-8 w-1 rounded-tr-full rounded-br-full bg-neutral-300 dark:bg-neutral-700 group-hover/feature:bg-blue-500 transition-all duration-200 origin-center" />
+        <div className="text-lg lg:text-xl font-bold mb-1 lg:mb-2 relative z-10">
+          <div className="absolute left-0 inset-y-0 h-6 lg:h-8 group-hover/feature:h-8 lg:group-hover/feature:h-10 w-1 -ml-4 lg:-ml-6 rounded-tr-full rounded-br-full bg-neutral-300 dark:bg-neutral-700 group-hover/feature:bg-violet-500 transition-all duration-200 origin-center" />
           <span className="group-hover/feature:translate-x-2 transition duration-200 inline-block text-neutral-800 dark:text-neutral-100">
           {title}
         </span>
         </div>
-        <p className="text-sm text-neutral-600 dark:text-neutral-300 max-w-xs relative z-10 px-10">
+        <p className="text-sm lg:text-lg text-neutral-600 dark:text-neutral-300 relative z-10">
           {description}
         </p>
       </div>

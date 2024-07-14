@@ -7,7 +7,7 @@ export function FlipWordsDemo() {
     const words = ["infóérettségi,", "ECDL-vizsga,", "egyetem,", ""];
 
     return (
-        <div className="h-[40rem] flex justify-center items-center px-4">
+        <div className="h-[45rem] flex justify-center items-center px-4">
             <div className="text-center">
                 <p className="text-5xl font-normal text-neutral-600 dark:text-neutral-400">
                     <span className="font-medium text-amber-500">
