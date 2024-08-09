@@ -19,7 +19,7 @@ export default function Home() {
             <FlipWordsDemo/>
           </section>
           <section id="services">
-            <p className="text-neutral-500 dark:text-neutral-400 text-xl md:text-3xl max-w-xl mx-auto mb-10 text-center">
+            <p className="text-neutral-500 text-xl md:text-3xl max-w-xl mx-auto mb-10 text-center">
             <span className="font-bold text-violet-500">
               Ezekről
             </span>{" "}
@@ -28,8 +28,8 @@ export default function Home() {
             <BentoGrid/>
           </section>
           <section id="playground">
-            <h2 className="text-center text-xl md:text-4xl font-bold text-black dark:text-white">Valami h2 cím</h2>
-            <p className="text-center text-base md:text-lg font-normal text-neutral-700 dark:text-neutral-200 max-w-md mt-2 mx-auto">
+            <h2 className="text-center text-xl md:text-4xl font-bold text-black">Valami h2 cím</h2>
+            <p className="text-center text-base md:text-lg font-normal text-neutral-700 max-w-md mt-2 mx-auto">
               Leírás hozzá meg esetleges bemutatkozás vagy nemtom.
             </p>
             <div className="flex flex-col items-center md:flex-row md:justify-center">

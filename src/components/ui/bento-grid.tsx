@@ -4,7 +4,6 @@ import {
   IconDatabase,
   IconCloud,
   IconFileSpreadsheet,
-  IconCurrencyDollar,
   IconFileText,
   IconHeart,
   IconHelp,
@@ -84,20 +83,20 @@ const Feature = ({
   return (
       <div
           className={cn(
-              "flex flex-col py-6 px-4 lg:py-8 lg:px-6 relative group/feature bg-whitesmoke dark:bg-neutral-900 rounded-lg transition-all duration-200"
+              "flex flex-col py-6 px-4 lg:py-8 lg:px-6 relative group/feature bg-whitesmoke dark:bg-whitesmoke rounded-lg transition-all duration-200"
           )}
       >
-        <div className="opacity-0 group-hover/feature:opacity-100 transition duration-200 absolute inset-0 h-full w-full bg-gradient-to-b from-neutral-100 dark:from-neutral-800 to-transparent pointer-events-none rounded-lg" />
-        <div className="mb-2 lg:mb-3 relative z-10 text-neutral-600 dark:text-neutral-400">
+        <div className="opacity-0 group-hover/feature:opacity-100 transition duration-200 absolute inset-0 h-full w-full bg-gradient-to-b from-neutral-100 dark:from-neutral-100 to-transparent pointer-events-none rounded-lg" />
+        <div className="mb-2 lg:mb-3 relative z-10 text-neutral-600 dark:text-neutral-600">
           {React.cloneElement(icon as React.ReactElement, { className: 'w-6 h-6 lg:w-8 lg:h-8' })}
         </div>
         <div className="text-lg lg:text-xl font-bold mb-1 lg:mb-2 relative z-10">
-          <div className="absolute left-0 inset-y-0 h-6 lg:h-8 group-hover/feature:h-8 lg:group-hover/feature:h-10 w-1 -ml-4 lg:-ml-6 rounded-tr-full rounded-br-full bg-neutral-300 dark:bg-neutral-700 group-hover/feature:bg-violet-500 transition-all duration-200 origin-center" />
-          <span className="group-hover/feature:translate-x-2 transition duration-200 inline-block text-neutral-800 dark:text-neutral-100">
+          <div className="absolute left-0 inset-y-0 h-6 lg:h-8 group-hover/feature:h-8 lg:group-hover/feature:h-10 w-1 -ml-4 lg:-ml-6 rounded-tr-full rounded-br-full bg-neutral-300 dark:bg-neutral-300 group-hover/feature:bg-violet-500 transition-all duration-200 origin-center" />
+          <span className="group-hover/feature:translate-x-2 transition duration-200 inline-block text-neutral-800 dark:text-neutral-800">
           {title}
         </span>
         </div>
-        <p className="text-sm lg:text-lg text-neutral-600 dark:text-neutral-300 relative z-10">
+        <p className="text-sm lg:text-lg text-neutral-600 dark:text-neutral-600 relative z-10">
           {description}
         </p>
       </div>

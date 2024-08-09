@@ -9,7 +9,7 @@ export function FlipWordsDemo() {
     return (
         <div className="h-[45rem] flex justify-center items-center px-4">
             <div className="text-center">
-                <p className="text-5xl font-normal text-neutral-600 dark:text-neutral-400">
+                <p className="text-5xl font-normal text-neutral-600">
                     <span className="font-medium text-amber-500">
                         Ez az oldal olyan egyszerű,
                         <br/>
@@ -18,7 +18,7 @@ export function FlipWordsDemo() {
                     <br/>
                     <FlipWords
                         words={words}
-                        className="inline-block font-medium text-black dark:text-white"
+                        className="inline-block font-medium text-black dark:text-black"
                     />
                     <br/>
                     <span className="font-medium text-violet-600">

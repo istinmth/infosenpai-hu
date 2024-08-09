@@ -12,7 +12,7 @@ interface AnimatedFlightButtonProps {
 const AnimatedFlightButton: React.FC<AnimatedFlightButtonProps> = ({ children, className, onClick }) => {
     return (
         <motion.button
-            className={`bg-black dark:bg-white dark:text-black text-white flex justify-center group/modal-btn relative overflow-hidden ${className}`}
+            className={`bg-black dark:bg-black dark:text-white text-white flex justify-center group/modal-btn relative overflow-hidden ${className}`}
             onClick={onClick}
             whileHover="hover"
         >
