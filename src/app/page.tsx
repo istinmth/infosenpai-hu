@@ -7,6 +7,7 @@ import { BoxesGrid } from "@/components/ui/boxes-grid";
 import { Pricing } from "@/components/elements/pricing";
 import { Navbar } from "@/components/ui/navlinks"
 import { BentoGrid } from "@/components/ui/bento-grid";
+import {SignupFormDemo} from "@/components/elements/signup";
 
 export default function Home() {
   return (
@@ -43,6 +44,9 @@ export default function Home() {
           <section id="random">
             <Pricing/>
           </section>
+            <section id="signup">
+                <SignupFormDemo/>
+            </section>
         </main>
       </div>
   );
