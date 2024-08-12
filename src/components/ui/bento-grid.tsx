@@ -31,30 +31,30 @@ export function BentoGrid() {
       icon: <IconFileText />,
     },
     {
-      title: "100% Uptime guarantee",
-      description: "We just cannot be taken down by anyone.",
+      title: "szöveg",
+      description: "leírás",
       icon: <IconCloud />,
     },
     {
-      title: "Multi-tenant Architecture",
-      description: "You can simply share passwords instead of buying new seats",
+      title: "szöveg",
+      description: "leírás",
       icon: <IconRouteAltLeft />,
     },
     {
-      title: "24/7 Customer Support",
+      title: "szöveg",
       description:
-          "We are available a 100% of the time. Atleast our AI Agents are.",
+          "leírás",
       icon: <IconHelp />,
     },
     {
-      title: "Money back guarantee",
+      title: "szöveg",
       description:
-          "If you donot like EveryAI, we will convince you to like us.",
+          "leírás",
       icon: <IconCloud />,
     },
     {
-      title: "And everything else",
-      description: "I just ran out of copy ideas. Accept my sincere apologies",
+      title: "szöveg",
+      description: "leírás",
       icon: <IconHeart />,
     },
   ];
