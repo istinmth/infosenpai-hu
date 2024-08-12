@@ -22,9 +22,9 @@ export default function Home() {
           <section id="services">
             <p className="text-neutral-500 text-xl md:text-3xl max-w-xl mx-auto mb-10 text-center">
             <span className="font-bold text-violet-500">
-              Ezekről
+              Olvasd el
             </span>{" "}
-              mindent megtudsz majd nálunk:
+              mi mindenről tanulhatsz nálunk!
             </p>
             <BentoGrid/>
           </section>

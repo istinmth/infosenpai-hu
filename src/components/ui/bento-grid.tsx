@@ -8,6 +8,7 @@ import {
   IconHeart,
   IconHelp,
   IconRouteAltLeft,
+  IconBrandCSharp
 } from "@tabler/icons-react";
 
 export function BentoGrid() {
@@ -31,19 +32,19 @@ export function BentoGrid() {
       icon: <IconFileText />,
     },
     {
-      title: "szöveg",
-      description: "leírás",
-      icon: <IconCloud />,
+      title: "Programozás",
+      description: "Mi nem Python-t tanítunk, hanem C#-ot, így később, ha egyetemre mész és meg kell ismerkedned a jó öreg C nyelvvel, már ismerős lesz. Ha pedig nem tervezel többet programozni, akkor se izgulj, igazából nem nehezebb mint a Python, csak több a pontosvessző.",
+      icon: <IconBrandCSharp />,
     },
     {
-      title: "szöveg",
-      description: "leírás",
+      title: "Power Point",
+      description: "Valószínűleg azt gondolod, hogy sok újdonságot már nem lehet neked mutatni, mert gyerekkorod óta használod… Azért mi megpróbálnánk!",
       icon: <IconRouteAltLeft />,
     },
     {
-      title: "szöveg",
+      title: "Weblapszerkesztés",
       description:
-          "leírás",
+          "Hozd létre életed első weboldalát! Megtanítjuk a HTML5 és a CSS alapjait, aztán hogy hogyan lehet mindezt egyszerűbben is…",
       icon: <IconHelp />,
     },
     {

@@ -1,4 +1,4 @@
-import { CloudArrowUpIcon, LockClosedIcon, ServerIcon } from '@heroicons/react/20/solid'
+import { XCircleIcon, ComputerDesktopIcon, ServerIcon, CpuChipIcon } from '@heroicons/react/20/solid'
 
 export function AboutSection() {
   return (
@@ -8,10 +8,9 @@ export function AboutSection() {
           <div className="lg:pr-4">
             <div className="lg:max-w-lg">
               <p className="text-base font-semibold leading-7 text-indigo-600">Miért minket válassz?</p>
-              <h1 className="mt-2 text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">Mi se tudjuk!</h1>
+              <h1 className="mt-2 text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">Nemrég mi is a cipődben voltunk.</h1>
               <p className="mt-6 text-xl leading-8 text-gray-700">
-                Aliquet nec orci mattis amet quisque ullamcorper neque, nibh sem. At arcu, sit dui mi, nibh dui, diam
-                eget aliquam. Quisque id at vitae feugiat egestas.
+                Pár éve mi is pont ott voltunk, ahol most te. Elérkezett az érettségi éve és azzal kellett szembesülnünk, hogy bizony az iskolánkban nincs informatikatanár, illetve, ha van is, ő nem tud minket megfelelően felkészíteni.
               </p>
             </div>
           </div>
@@ -27,46 +26,53 @@ export function AboutSection() {
           <div className="lg:pr-4">
             <div className="max-w-xl text-base leading-7 text-gray-700 lg:max-w-lg">
               <p>
-                Faucibus commodo massa rhoncus, volutpat. Dignissim sed eget risus enim. Mattis mauris semper sed amet
-                vitae sed turpis id. Id dolor praesent donec est. Odio penatibus risus viverra tellus varius sit neque
-                erat velit. Faucibus commodo massa rhoncus, volutpat. Dignissim sed eget risus enim. Mattis mauris
-                semper sed amet vitae sed turpis id.
+                A szomorú igazság az, hogy akinek van "informatikus" végzettsége, az szinte bárhol többet tud keresni,
+                mintha tanárnak menne.
+                Persze meg lehet tanulni egyénileg is mindent, ahogy mi tettük, de nagyon sokat segített volna, ha
+                valaki, aki ért hozzá, megtanította volna nekünk.
               </p>
               <ul role="list" className="mt-8 space-y-8 text-gray-600">
                 <li className="flex gap-x-3">
-                  <CloudArrowUpIcon className="mt-1 h-5 w-5 flex-none text-indigo-600" aria-hidden="true" />
+                  <CpuChipIcon className="mt-1 h-5 w-5 flex-none text-indigo-600" aria-hidden="true"/>
                   <span>
-                    <strong className="font-semibold text-gray-900">Push to deploy.</strong> Lorem ipsum, dolor sit amet
-                    consectetur adipisicing elit. Maiores impedit perferendis suscipit eaque, iste dolor cupiditate
-                    blanditiis ratione.
+                    <strong className="font-semibold text-gray-900">Éppen ezért</strong> elhatároztuk, hogy ha nincs aki oktatna informatikát, majd mi megtesszük. Így jött létre ez a weboldal, a tanterv és a házi feladatok is. (Igen lesz házi is, de ne izgulj, érdekes feladatok lesznek)
                   </span>
                 </li>
                 <li className="flex gap-x-3">
-                  <LockClosedIcon className="mt-1 h-5 w-5 flex-none text-indigo-600" aria-hidden="true" />
+                  <XCircleIcon className="mt-1 h-5 w-5 flex-none text-indigo-600" aria-hidden="true"/>
                   <span>
-                    <strong className="font-semibold text-gray-900">SSL certificates.</strong> Anim aute id magna aliqua
-                    ad ad non deserunt sunt. Qui irure qui lorem cupidatat commodo.
+                    <strong className="font-semibold text-gray-900">Úgy gondoljuk,</strong> hogy nagyon sokat segít, ha valaki olyantól tanul az ember, aki maga is végig járta az utat (elkövetve pár hibát, amit meg tud osztani, hogy te ne járj úgy mint ő…) és motiválni tud a tanulásban.
                   </span>
                 </li>
                 <li className="flex gap-x-3">
-                  <ServerIcon className="mt-1 h-5 w-5 flex-none text-indigo-600" aria-hidden="true" />
+                  <ComputerDesktopIcon className="mt-1 h-5 w-5 flex-none text-indigo-600" aria-hidden="true"/>
                   <span>
-                    <strong className="font-semibold text-gray-900">Database backups.</strong> Ac tincidunt sapien
-                    vehicula erat auctor pellentesque rhoncus. Et magna sit morbi lobortis.
+                    <strong className="font-semibold text-gray-900">A jövőben</strong> egyre csak nagyobb és nagyobb szükség lesz az informatikai tudás valamilyen formájára. Minél előbb kezded el tanulni, annál egyszerűbb lesz később az életed.
                   </span>
                 </li>
               </ul>
+              <h2 className="mt-16 text-2xl font-bold tracking-tight text-gray-900">Hidd el, tudunk neked újat
+                mutatni!</h2>
               <p className="mt-8">
-                Et vitae blandit facilisi magna lacus commodo. Vitae sapien duis odio id et. Id blandit molestie auctor
-                fermentum dignissim. Lacus diam tincidunt ac cursus in vel. Mauris varius vulputate et ultrices hac
-                adipiscing egestas. Iaculis convallis ac tempor et ut. Ac lorem vel integer orci.
+                Ha úgy érzed, hogy már mindent tudsz, amit tudni lehet, akkor is érdemes eljönnöd! Amikor beültünk az
+                első egyetemi óráinkra, hamar kiderült, hogy amit eddig gondoltunk hogy tudunk, az a valóságban csak egy
+                icipici szelete a tortának. Találunk neked is kihívást bármelyik témakörben, ne aggódj.
               </p>
-              <h2 className="mt-16 text-2xl font-bold tracking-tight text-gray-900">No server? No problem.</h2>
-              <p className="mt-6">
-                Id orci tellus laoreet id ac. Dolor, aenean leo, ac etiam consequat in. Convallis arcu ipsum urna nibh.
-                Pharetra, euismod vitae interdum mauris enim, consequat vulputate nibh. Maecenas pellentesque id sed
-                tellus mauris, ultrices mauris. Tincidunt enim cursus ridiculus mi. Pellentesque nam sed nullam sed diam
-                turpis ipsum eu a sed convallis diam.
+              <h2 className="mt-16 text-2xl font-bold tracking-tight text-gray-900">Akkor se aggódj, ha nincs sok
+                gyakorlatod a dologban!</h2>
+              <p className="mt-8">
+                Magyarországon az informatikaórák száma legjobb esetben is nagyon kevés, és a különböző képességű diákok
+                keveredése itt talán még nagyobb hátrány, mint
+                sok másik tantárgy esetében. Fakultációra természetesen tanárhiány miatt nem volt lehetőség a mi
+                iskolánkban, így magunktól,
+                online talált videókból, 10 éves feladatok megoldásaiból szedtük össze a felvételi pontjainkat. Ha úgy
+                érzed, kicsit üres kézzel futsz neki a felkészülésnek, egyet se félj!
+              </p>
+              <p className="text-base font-semibold text-indigo-600 mt-6">Úgy állítottuk össze a tananyagot, hogy kellően lefedje az érettségi és az ECDL vizsga tananyagát, de
+                túl is mutasson rajta, és megfelelő alapot adjon azoknak, akik esetleg ilyen irányban szeretnének
+                továbbtanulni.</p>
+              <p className="mt-3">
+
               </p>
             </div>
           </div>
