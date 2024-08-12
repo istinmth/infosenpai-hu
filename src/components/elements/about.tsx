@@ -26,7 +26,7 @@ export function AboutSection() {
           <div className="lg:pr-4">
             <div className="max-w-xl text-base leading-7 text-gray-700 lg:max-w-lg">
               <p>
-                A szomorú igazság az, hogy akinek van "informatikus" végzettsége, az szinte bárhol többet tud keresni,
+                A szomorú igazság az, hogy akinek van informatikus végzettsége, az szinte bárhol többet tud keresni,
                 mintha tanárnak menne.
                 Persze meg lehet tanulni egyénileg is mindent, ahogy mi tettük, de nagyon sokat segített volna, ha
                 valaki, aki ért hozzá, megtanította volna nekünk.
