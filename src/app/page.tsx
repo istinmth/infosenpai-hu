@@ -8,6 +8,7 @@ import { Pricing } from "@/components/elements/pricing";
 import { Navbar } from "@/components/ui/navlinks"
 import { BentoGrid } from "@/components/ui/bento-grid";
 import {SignupFormDemo} from "@/components/elements/signup";
+import AbelIntro from "@/components/elements/abelntro";
 
 export default function Home() {
   return (
@@ -29,13 +30,8 @@ export default function Home() {
             <BentoGrid/>
           </section>
           <section id="playground">
-            <h2 className="text-center text-xl md:text-4xl font-bold text-black">Valami h2 cím</h2>
-            <p className="text-center text-base md:text-lg font-normal text-neutral-700 max-w-md mt-2 mx-auto">
-              Leírás hozzá meg esetleges bemutatkozás vagy nemtom.
-            </p>
             <div className="flex flex-col items-center md:flex-row md:justify-center">
-              <EvervaultCardIsti/>
-              <EvervaultCardAbel/>
+              <AbelIntro/>
             </div>
           </section>
           <section id="content">
