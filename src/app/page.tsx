@@ -17,31 +17,30 @@ export default function Home() {
         <main>
           <Navbar/>
           <BoxesGrid/>
-          <section id="product">
+          <section id="főcím">
             <FlipWordsDemo/>
           </section>
-          <section id="services">
+          <section id="témakörök">
             <p className="text-neutral-500 text-xl md:text-3xl max-w-xl mx-auto mb-10 text-center">
-            <span className="font-bold text-violet-500">
+            <span className="font-bold text-violet-600">
               Olvasd el
             </span>{" "}
               mi mindenről tanulhatsz nálunk!
             </p>
             <BentoGrid/>
           </section>
-          <section id="playground">
+          <section id="rólunk">
             <div className="flex flex-col items-center md:flex-row md:justify-center">
               <AbelIntro/>
             </div>
           </section>
-          <section id="content">
+          <section id="miért mi?">
             <AboutSection/>
           </section>
-          <section id="random">
+          <section id="jelentkezz!">
             <Pricing/>
           </section>
             <section id="signup">
-                <SignupFormDemo/>
             </section>
         </main>
       </div>

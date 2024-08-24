@@ -26,7 +26,7 @@ export function Pricing() {
               repellendus etur quidem assumenda.
             </p>
             <div className="mt-10 flex items-center gap-x-4">
-              <h4 className="flex-none text-sm font-semibold leading-6 text-indigo-600">Mire számíthatsz?</h4>
+              <h4 className="flex-none text-sm font-semibold leading-6 text-violet-600">Mire számíthatsz?</h4>
               <div className="h-px flex-auto bg-gray-500" />
             </div>
             <ul
@@ -35,7 +35,7 @@ export function Pricing() {
             >
               {includedFeatures.map((feature) => (
                 <li key={feature} className="flex gap-x-3">
-                  <CheckIcon className="h-6 w-5 flex-none text-indigo-600" aria-hidden="true" />
+                  <CheckIcon className="h-6 w-5 flex-none text-violet-600" aria-hidden="true" />
                   {feature}
                 </li>
               ))}
@@ -51,12 +51,12 @@ export function Pricing() {
                 </p>
                 <a
                   href="#"
-                  className="mt-10 block w-full rounded-md bg-violet-500 px-3 py-2 text-center text-sm font-semibold text-white shadow-sm hover:bg-amber-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                  className="mt-10 block w-full rounded-md bg-violet-600 px-3 py-2 text-center text-sm font-semibold text-white shadow-sm hover:bg-amber-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
                 >
                   Jelentkezem
                 </a>
                 <p className="mt-6 text-xs leading-5 text-gray-600">
-                  Lehetőséged lesz fizetni online, a jelentkezési folyamat végén, vagy a helyszínen. A helyszínen kártyát és készpénzt is elfogadunk. <br/> <span className="text-violet-500">Minden esetben számlát kapsz a vásárlásról.</span>
+                  Lehetőséged lesz fizetni online, a jelentkezési folyamat végén, vagy a helyszínen. A helyszínen kártyát és készpénzt is elfogadunk. <br/> <span className="text-violet-600">Minden esetben számlát kapsz a vásárlásról.</span>
                 </p>
               </div>
             </div>
