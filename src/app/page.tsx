@@ -1,7 +1,5 @@
 import Head from 'next/head'
 import { FlipWordsDemo } from "@/components/elements/header";
-import { EvervaultCardIsti } from "@/components/elements/evervaultIsti";
-import { EvervaultCardAbel } from "@/components/elements/evervaultAbel";
 import { AboutSection } from "@/components/elements/about";
 import { BoxesGrid } from "@/components/ui/boxes-grid";
 import { Pricing } from "@/components/elements/pricing";
