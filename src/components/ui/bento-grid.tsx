@@ -74,7 +74,6 @@ const Feature = ({
                    title,
                    description,
                    icon,
-                   index,
                  }: {
   title: string;
   description: string;
@@ -87,7 +86,7 @@ const Feature = ({
               "flex flex-col py-6 px-4 lg:py-8 lg:px-6 relative group/feature bg-whitesmoke dark:bg-whitesmoke rounded-lg transition-all duration-200"
           )}
       >
-        <div className="opacity-0 group-hover/feature:opacity-100 transition duration-200 absolute inset-0 h-full w-full bg-gradient-to-b from-neutral-100 dark:from-neutral-100 to-transparent pointer-events-none rounded-lg" />
+        <div className="opacity-0 group-hover/feature:opacity-100 transition duration-200 absolute inset-0 h-full w-full pointer-events-none rounded-lg" />
         <div className="mb-2 lg:mb-3 relative z-10 text-neutral-600 dark:text-neutral-600">
           {React.cloneElement(icon as React.ReactElement, { className: 'w-6 h-6 lg:w-8 lg:h-8' })}
         </div>
