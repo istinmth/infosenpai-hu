@@ -47,17 +47,6 @@ export function BentoGrid() {
           "Hozd létre életed első weboldalát! Megtanítjuk a HTML5 és a CSS alapjait, aztán hogy hogyan lehet mindezt egyszerűbben is…",
       icon: <IconHelp />,
     },
-    {
-      title: "szöveg",
-      description:
-          "leírás",
-      icon: <IconCloud />,
-    },
-    {
-      title: "szöveg",
-      description: "leírás",
-      icon: <IconHeart />,
-    },
   ];
   return (
       <div className="flex justify-center w-full py-10 px-4 lg:px-0">
