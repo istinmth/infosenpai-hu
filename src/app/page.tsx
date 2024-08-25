@@ -1,3 +1,5 @@
+"use client"
+
 import Head from 'next/head'
 import { FlipWordsDemo } from "@/components/elements/header";
 import { AboutSection } from "@/components/elements/about";
@@ -5,9 +7,7 @@ import { BoxesGrid } from "@/components/ui/boxes-grid";
 import { Pricing } from "@/components/elements/pricing";
 import { Navbar } from "@/components/ui/navlinks"
 import { BentoGrid } from "@/components/ui/bento-grid";
-import {SignupFormDemo} from "@/components/elements/signup";
 import AbelIntro from "@/components/elements/abelntro";
-
 export default function Home() {
   return (
       <div>

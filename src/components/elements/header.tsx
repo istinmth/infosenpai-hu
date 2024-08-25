@@ -1,7 +1,6 @@
 "use client"
 import React from "react";
 import { FlipWords } from "../ui/flip-words";
-import Button from "@/components/elements/Button";
 
 export function FlipWordsDemo() {
     const words = ["infóérettségi,", "egyetem,", "ECDL-vizsga"];
@@ -20,9 +19,19 @@ export function FlipWordsDemo() {
     };
 
     return (
-        <div className="h-[40rem] flex justify-center items-center px-4">
+        <div className="min-h-screen flex flex-col justify-center items-center px-4">
+            <div className="mb-8 sm:mb-12 flex justify-center w-full">
+                <div
+                    className="relative rounded-full px-3 py-1 text-sm leading-6 text-gray-600 ring-1 ring-gray-900/10 hover:ring-gray-900/20 text-center max-w-full">
+                    <span className="">Regisztrálj most az ingyenes</span>{' '}
+                    <a href="#" className="font-semibold text-violet-600 whitespace-nowrap">
+                        <span className="absolute inset-0" aria-hidden="true"/>
+                        próbaalkalomra <span aria-hidden="true">&rarr;</span>
+                    </a>
+                </div>
+            </div>
             <div className="text-center">
-                <p className="text-5xl font-normal text-neutral-600 dark:text-neutral-400">
+                <p className="text-5xl sm:text-4xl md:text-5xl font-normal text-neutral-600 dark:text-neutral-400">
                     <span className="font-medium text-amber-500">
                         Ez az oldal olyan egyszerű,
                         <br/>
@@ -38,19 +47,21 @@ export function FlipWordsDemo() {
                         ha eljössz az óráinkra
                     </span>
                 </p>
-                <div className="py-5 flex items-center justify-center">
-                    <Button
-                        className="px-4 py-2 rounded-md mr-4"
-                        onClick={handleNezzukClick}
-                    >
-                        Tudj meg többet!
-                    </Button>
-                    <Button
-                        className="px-4 py-2 rounded-md bg-violet-600"
+                <div className="mt-10 flex items-center justify-center gap-x-6">
+                    <a
+                        href="#"
+                        className="rounded-md bg-black px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-gray-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
                         onClick={handleClick}
                     >
-                        Jelentkezz!
-                    </Button>
+                        Jelentkezz
+                    </a>
+                    <a
+                        href="#"
+                        className="text-sm font-semibold leading-6 text-gray-700"
+                        onClick={handleNezzukClick}
+                    >
+                        Miről fogsz tanulni? <span aria-hidden="true">→</span>
+                    </a>
                 </div>
             </div>
         </div>
