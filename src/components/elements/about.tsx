@@ -18,7 +18,7 @@ export function AboutSection() {
         </div>
         <div className="-ml-12 -mt-12 p-12 lg:sticky lg:top-4 lg:col-start-2 lg:row-span-2 lg:row-start-1 lg:overflow-hidden">
           <Image
-              src="/data.png"
+              src="/ujkep.png"
               alt="Data visualization"
               width={912} // This is equivalent to 57rem at 16px base font size
               height={608} // Assuming a 3:2 aspect ratio, adjust if different
