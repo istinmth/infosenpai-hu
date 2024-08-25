@@ -5,7 +5,7 @@ import { cn } from "@/utils/cn";
 
 export const FlipWords = ({
                               words,
-                              duration = 3000,
+                              duration = 1200,
                               className,
                               containerClassName,
                           }: {
@@ -74,7 +74,7 @@ export const FlipWords = ({
                             animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
                             transition={{
                                 delay: index * 0.08,
-                                duration: 0.4,
+                                duration: 0.35,
                             }}
                             className="inline-block"
                         >

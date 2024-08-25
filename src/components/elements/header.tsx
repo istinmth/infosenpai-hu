@@ -4,10 +4,16 @@ import { FlipWords } from "../ui/flip-words";
 import Button from "@/components/elements/Button";
 
 export function FlipWordsDemo() {
-    const words = ["infóérettségi,", "ECDL-vizsga,", "egyetem,", ""];
+    const words = ["infóérettségi,", "egyetem,", "ECDL-vizsga"];
 
     const handleNezzukClick = () => {
         const temakorokSection = document.getElementById('témakörök');
+        if (temakorokSection) {
+            temakorokSection.scrollIntoView({ behavior: 'smooth' });
+        }
+    };
+    const handleClick = () => {
+        const temakorokSection = document.getElementById('jelentkezz!');
         if (temakorokSection) {
             temakorokSection.scrollIntoView({ behavior: 'smooth' });
         }
@@ -34,10 +40,16 @@ export function FlipWordsDemo() {
                 </p>
                 <div className="py-5 flex items-center justify-center">
                     <Button
-                        className="px-4 py-2 rounded-md"
+                        className="px-4 py-2 rounded-md mr-4"
                         onClick={handleNezzukClick}
                     >
-                        Nézzük!
+                        Tudj meg többet!
+                    </Button>
+                    <Button
+                        className="px-4 py-2 rounded-md bg-violet-600"
+                        onClick={handleClick}
+                    >
+                        Jelentkezz!
                     </Button>
                 </div>
             </div>

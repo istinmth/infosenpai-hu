@@ -143,7 +143,7 @@ export const Navbar = () => {
                         className="md:hidden mx-auto text-gray-500 hover:text-gray-700 transition-colors"
                         onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
                     >
-                        &lt;menü&gt;
+                        printf(&quot;Menü&quot;);
                     </button>
 
                     {/* Desktop menu - Unchanged */}

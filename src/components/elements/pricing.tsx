@@ -1,10 +1,10 @@
 import { CheckIcon } from '@heroicons/react/20/solid'
 
 const includedFeatures = [
-  '2 órás alkalmak szombatonként',
+  '3 órás alkalmak szombatonként',
   'A végén próbaérettségi',
   'Átfogó tananyag',
-  'Nemtom 2',
+  'Jó hangulat',
 ]
 
 export function Pricing() {
@@ -22,8 +22,7 @@ export function Pricing() {
           <div className="p-8 sm:p-10 lg:flex-auto">
             <h3 className="text-2xl font-bold tracking-tight text-gray-900">Ár és tudnivalók</h3>
             <p className="mt-6 text-base leading-7 text-gray-600">
-              Lorem ipsum dolor sit amet consect etur adipisicing elit. Itaque amet indis perferendis blanditiis
-              repellendus etur quidem assumenda.
+              Az ár tartalmazza a 3 órás oktatást, a kiadott feladatok javítását.
             </p>
             <div className="mt-10 flex items-center gap-x-4">
               <h4 className="flex-none text-sm font-semibold leading-6 text-violet-600">Mire számíthatsz?</h4>
@@ -46,7 +45,7 @@ export function Pricing() {
               <div className="mx-auto max-w-xs px-8">
                 <p className="text-base font-semibold text-gray-600">Az első előadás ingyenes, utána alkalmanként</p>
                 <p className="mt-6 flex items-baseline justify-center gap-x-2">
-                  <span className="text-5xl font-bold tracking-tight text-gray-900">5000</span>
+                  <span className="text-5xl font-bold tracking-tight text-gray-900">6000</span>
                   <span className="text-sm font-semibold leading-6 tracking-wide text-gray-600">Ft</span>
                 </p>
                 <a
@@ -56,7 +55,7 @@ export function Pricing() {
                   Jelentkezem
                 </a>
                 <p className="mt-6 text-xs leading-5 text-gray-600">
-                  Lehetőséged lesz fizetni online, a jelentkezési folyamat végén, vagy a helyszínen. A helyszínen kártyát és készpénzt is elfogadunk. <br/> <span className="text-violet-600">Minden esetben számlát kapsz a vásárlásról.</span>
+                  Lehetőséged lesz fizetni online, a jelentkezési folyamat végén, vagy a helyszínen. <br/> <span className="text-violet-600">Minden esetben számlát kapsz a vásárlásról.</span>
                 </p>
               </div>
             </div>
