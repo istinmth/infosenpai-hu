@@ -20,7 +20,7 @@ export function FlipWordsDemo() {
 
     return (
         <div className="min-h-screen flex flex-col justify-center items-center px-4">
-            <div className="mb-8 sm:mb-12 flex justify-center w-full">
+            <div className="mb-6 sm:mb-6 flex justify-center w-full">
                 <div
                     className="relative rounded-full px-3 py-1 text-sm leading-6 text-gray-600 ring-1 ring-gray-900/10 hover:ring-gray-900/20 text-center max-w-full">
                     <span className="">Regisztrálj most az ingyenes</span>{' '}
@@ -31,7 +31,7 @@ export function FlipWordsDemo() {
                 </div>
             </div>
             <div className="text-center">
-                <p className="text-5xl sm:text-4xl md:text-5xl font-normal text-neutral-600 dark:text-neutral-400">
+                <p className="text-5xl sm:text-6xl md:text-6xl font-normal text-neutral-600 dark:text-neutral-400">
                     <span className="font-medium text-amber-500">
                         Ez az oldal olyan egyszerű,
                         <br/>
