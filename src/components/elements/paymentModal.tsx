@@ -1,13 +1,15 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { XIcon, CheckIcon, ChevronDownIcon, ChevronUpIcon, ArrowLeftIcon } from 'lucide-react';
+import Link from 'next/link';
 
 interface PaymentModalProps {
     isOpen: boolean;
     onClose: () => void;
 }
 
-type ScreenType = 'main' | 'registration' | 'payment';
+type ScreenType = 'main' | 'registration' | 'payment' | 'thankyou';
+type SubmissionStatus = 'idle' | 'submitting' | 'success' | 'error';
 
 const ProgressIndicator: React.FC<{ currentStep: number }> = ({ currentStep }) => {
     return (
@@ -18,10 +20,37 @@ const ProgressIndicator: React.FC<{ currentStep: number }> = ({ currentStep }) =
     );
 };
 
+const LoadingDots = () => (
+    <div className="flex space-x-1">
+        <motion.div
+            className="w-2 h-2 bg-white rounded-full"
+            animate={{ y: ["0%", "-50%", "0%"] }}
+            transition={{ duration: 0.6, repeat: Infinity, ease: "easeInOut" }}
+        />
+        <motion.div
+            className="w-2 h-2 bg-white rounded-full"
+            animate={{ y: ["0%", "-50%", "0%"] }}
+            transition={{ duration: 0.6, repeat: Infinity, ease: "easeInOut", delay: 0.2 }}
+        />
+        <motion.div
+            className="w-2 h-2 bg-white rounded-full"
+            animate={{ y: ["0%", "-50%", "0%"] }}
+            transition={{ duration: 0.6, repeat: Infinity, ease: "easeInOut", delay: 0.4 }}
+        />
+    </div>
+);
+
 const PaymentModal: React.FC<PaymentModalProps> = ({ isOpen, onClose }) => {
     const [expandedTier, setExpandedTier] = useState<number | null>(null);
     const [currentScreen, setCurrentScreen] = useState<ScreenType>('main');
     const [selectedTier, setSelectedTier] = useState<number | null>(null);
+    const [submissionStatus, setSubmissionStatus] = useState<SubmissionStatus>('idle');
+    const [errorMessage, setErrorMessage] = useState<string | null>(null);
+    const [formData, setFormData] = useState({
+        lastName: '',
+        firstName: '',
+        email: ''
+    });
 
     const pricingTiers = [
         {
@@ -75,6 +104,55 @@ const PaymentModal: React.FC<PaymentModalProps> = ({ isOpen, onClose }) => {
     const handleBack = () => {
         setCurrentScreen('main');
         setSelectedTier(null);
+        setSubmissionStatus('idle');
+        setErrorMessage(null);
+    };
+
+    const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const { name, value } = e.target;
+        setFormData(prevData => ({
+            ...prevData,
+            [name]: value
+        }));
+    };
+
+    const handleRegistrationSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
+        setSubmissionStatus('submitting');
+        setErrorMessage(null);
+        try {
+            const response = await fetch('/api/form-submission', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    ...formData,
+                    tier: selectedTier === 0 ? 'Free Trial' : pricingTiers[selectedTier!].title,
+                    price: pricingTiers[selectedTier!].price
+                }),
+            });
+
+            const data = await response.json();
+
+            if (!response.ok) {
+                throw new Error(data.error || 'An unexpected error occurred');
+            }
+
+            console.log('Form submitted successfully:', data);
+            setSubmissionStatus('success');
+            setTimeout(() => {
+                setCurrentScreen('thankyou');
+            }, 1000);
+        } catch (error: unknown) {
+            console.error('Error submitting form:', error);
+            setSubmissionStatus('error');
+            if (error instanceof Error) {
+                setErrorMessage(error.message);
+            } else {
+                setErrorMessage('An unexpected error occurred');
+            }
+        }
     };
 
     const fadeVariants = {
@@ -103,9 +181,9 @@ const PaymentModal: React.FC<PaymentModalProps> = ({ isOpen, onClose }) => {
                         animate={{ scale: 1, opacity: 1 }}
                         exit={{ scale: 0.9, opacity: 0 }}
                         transition={{ duration: 0.3 }}
-                        className="bg-white rounded-lg shadow-xl overflow-hidden w-full max-w-6xl max-h-[90vh] overflow-y-auto"
+                        className="bg-white rounded-lg shadow-xl w-full max-w-5xl h-[85vh] overflow-hidden flex flex-col"
                     >
-                        <div className="p-4 md:p-6">
+                        <div className="p-4 md:p-6 flex-grow overflow-y-auto">
                             <div className="flex justify-between items-center mb-4 md:mb-6">
                                 {currentScreen !== 'main' ? (
                                     <button onClick={handleBack} className="text-gray-500 hover:text-gray-700 flex items-center">
@@ -120,7 +198,7 @@ const PaymentModal: React.FC<PaymentModalProps> = ({ isOpen, onClose }) => {
                                 </button>
                             </div>
 
-                            <div className="relative overflow-hidden" style={{ minHeight: '400px' }}>
+                            <div className="relative" style={{ minHeight: '400px' }}>
                                 <AnimatePresence mode="wait">
                                     {currentScreen === 'main' && (
                                         <motion.div
@@ -215,44 +293,80 @@ const PaymentModal: React.FC<PaymentModalProps> = ({ isOpen, onClose }) => {
                                         >
                                             <div className="flex-grow flex flex-col items-center justify-center">
                                                 <div className="space-y-6 w-full max-w-md">
-                                                    <h2 className="text-xl md:text-2xl font-bold text-violet-600">Regisztráció a próbaalkalomra</h2>
-                                                    <div className="flex space-x-4">
-                                                        <div className="flex-1">
-                                                            <label htmlFor="lastName" className="block text-sm font-medium text-gray-700 mb-1">Vezetéknév</label>
+                                                    <h2 className="text-xl md:text-2xl font-bold text-violet-600">Regisztráció
+                                                        a próbaalkalomra</h2>
+                                                    <form onSubmit={handleRegistrationSubmit}>
+                                                        <div className="flex space-x-4">
+                                                            <div className="flex-1">
+                                                                <label htmlFor="lastName"
+                                                                       className="block text-sm font-medium text-gray-700 mb-1">Vezetéknév</label>
+                                                                <input
+                                                                    type="text"
+                                                                    id="lastName"
+                                                                    name="lastName"
+                                                                    value={formData.lastName}
+                                                                    onChange={handleInputChange}
+                                                                    className="w-full px-3 py-2 bg-gray-50 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-violet-500 focus:border-transparent"
+                                                                    placeholder="Kovács"
+                                                                    required
+                                                                />
+                                                            </div>
+                                                            <div className="flex-1">
+                                                                <label htmlFor="firstName"
+                                                                       className="block text-sm font-medium text-gray-700 mb-1">Keresztnév</label>
+                                                                <input
+                                                                    type="text"
+                                                                    id="firstName"
+                                                                    name="firstName"
+                                                                    value={formData.firstName}
+                                                                    onChange={handleInputChange}
+                                                                    className="w-full px-3 py-2 bg-gray-50 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-violet-500 focus:border-transparent"
+                                                                    placeholder="János"
+                                                                    required
+                                                                />
+                                                            </div>
+                                                        </div>
+                                                        <div className="mt-4">
+                                                            <label htmlFor="email"
+                                                                   className="block text-sm font-medium text-gray-700 mb-1">E-mail
+                                                                cím</label>
                                                             <input
-                                                                type="text"
-                                                                id="lastName"
-                                                                name="lastName"
+                                                                type="email"
+                                                                id="email"
+                                                                name="email"
+                                                                value={formData.email}
+                                                                onChange={handleInputChange}
                                                                 className="w-full px-3 py-2 bg-gray-50 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-violet-500 focus:border-transparent"
-                                                                placeholder="Kovács"
+                                                                placeholder="pelda@email.com"
+                                                                required
                                                             />
                                                         </div>
-                                                        <div className="flex-1">
-                                                            <label htmlFor="firstName" className="block text-sm font-medium text-gray-700 mb-1">Keresztnév</label>
-                                                            <input
-                                                                type="text"
-                                                                id="firstName"
-                                                                name="firstName"
-                                                                className="w-full px-3 py-2 bg-gray-50 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-violet-500 focus:border-transparent"
-                                                                placeholder="János"
-                                                            />
-                                                        </div>
-                                                    </div>
-                                                    <div>
-                                                        <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">E-mail cím</label>
-                                                        <input
-                                                            type="email"
-                                                            id="email"
-                                                            name="email"
-                                                            className="w-full px-3 py-2 bg-gray-50 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-violet-500 focus:border-transparent"
-                                                            placeholder="pelda@email.com"
-                                                        />
-                                                    </div>
-                                                    <button className="w-full bg-violet-600 text-white rounded-md py-3 font-medium hover:bg-violet-700 transition-colors duration-200 shadow-md hover:shadow-lg">
-                                                        Regisztráció
-                                                    </button>
+                                                        <button
+                                                            type="submit"
+                                                            className="mt-6 w-full bg-violet-600 text-white rounded-md py-3 font-medium hover:bg-violet-700 transition-colors duration-200 shadow-md hover:shadow-lg flex items-center justify-center"
+                                                            disabled={submissionStatus === 'submitting'}
+                                                        >
+                                                            {submissionStatus === 'submitting' ? (
+                                                                <LoadingDots/>
+                                                            ) : submissionStatus === 'success' ? (
+                                                                'Sikeres regisztráció!'
+                                                            ) : submissionStatus === 'error' ? (
+                                                                'Hiba történt. Próbáld újra.'
+                                                            ) : (
+                                                                'Regisztrálok'
+                                                            )}
+                                                        </button>
+                                                    </form>
+                                                    {errorMessage && (
+                                                        <p className="text-red-500 text-sm mt-2">{errorMessage}</p>
+                                                    )}
                                                     <p className="text-xs text-center text-gray-500">
-                                                        A regisztrációval elfogadod az adatkezelési tájékoztatónkat.
+                                                        A regisztrációval elfogadod az{' '}
+                                                        <Link href="/compliance"
+                                                              className="text-violet-600 hover:underline">
+                                                            adatkezelési tájékoztatónkat
+                                                        </Link>
+                                                        .
                                                     </p>
                                                 </div>
                                             </div>
@@ -266,17 +380,41 @@ const PaymentModal: React.FC<PaymentModalProps> = ({ isOpen, onClose }) => {
                                             initial="hidden"
                                             animate="visible"
                                             exit="exit"
-                                            transition={{ duration: 0.3 }}
+                                            transition={{duration: 0.3}}
                                             className="absolute inset-0 flex flex-col w-full h-full"
                                         >
                                             <div className="flex-grow flex flex-col items-center justify-center">
                                                 <h2 className="text-xl md:text-2xl font-bold mb-6 self-start">Fizetés</h2>
                                                 <div className="space-y-4 w-full max-w-md">
-                                                    <p className="text-lg font-semibold">Fizetési összeg: {pricingTiers[selectedTier!].price}</p>
+                                                    <p className="text-lg font-semibold">Fizetési
+                                                        összeg: {pricingTiers[selectedTier!].price}</p>
                                                     <div className="bg-gray-100 p-4 rounded-md">
                                                         <p className="text-center text-gray-600">Itt lesz majd a Stripe Embed.</p>
                                                     </div>
                                                 </div>
+                                            </div>
+                                        </motion.div>
+                                    )}
+
+                                    {currentScreen === 'thankyou' && (
+                                        <motion.div
+                                            key="thankyou"
+                                            variants={fadeVariants}
+                                            initial="hidden"
+                                            animate="visible"
+                                            exit="exit"
+                                            transition={{ duration: 0.3 }}
+                                            className="absolute inset-0 flex flex-col items-center justify-center"
+                                        >
+                                            <div className="text-center space-y-4">
+                                                <h2 className="text-2xl md:text-3xl font-bold text-violet-600">Köszönjük a regisztrációt!</h2>
+                                                <p className="text-lg text-gray-600">Hamarosan küldünk egy visszaigazoló e-mailt a megadott címre.</p>
+                                                <button
+                                                    onClick={onClose}
+                                                    className="mt-6 px-6 py-2 bg-violet-600 text-white rounded-md font-medium hover:bg-violet-700 transition-colors duration-200"
+                                                >
+                                                    Bezárás
+                                                </button>
                                             </div>
                                         </motion.div>
                                     )}
