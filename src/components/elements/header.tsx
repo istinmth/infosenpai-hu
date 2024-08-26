@@ -1,4 +1,3 @@
-"use client"
 import React from "react";
 import { FlipWords } from "../ui/flip-words";
 
@@ -21,8 +20,7 @@ export function FlipWordsDemo() {
     return (
         <div className="min-h-screen flex flex-col justify-center items-center px-4">
             <div className="mb-6 sm:mb-6 flex justify-center w-full">
-                <div
-                    className="relative rounded-full px-3 py-1 text-sm leading-6 text-gray-600 ring-1 ring-gray-900/10 hover:ring-gray-900/20 text-center max-w-full">
+                <div className="relative rounded-full px-3 py-1 text-sm leading-6 text-gray-600 ring-1 ring-gray-900/10 hover:ring-gray-900/20 text-center max-w-full">
                     <span className="">Regisztrálj most az ingyenes</span>{' '}
                     <a href="#" className="font-semibold text-violet-600 whitespace-nowrap">
                         <span className="absolute inset-0" aria-hidden="true"/>
@@ -31,18 +29,20 @@ export function FlipWordsDemo() {
                 </div>
             </div>
             <div className="text-center">
-                <p className="text-5xl sm:text-6xl md:text-6xl font-normal text-neutral-600 dark:text-neutral-400">
+                <p className="text-4xl md:text-6xl font-normal text-neutral-600 dark:text-neutral-400">
                     <span className="font-medium text-amber-500">
                         Ez az oldal olyan egyszerű,
-                        <br/>
+                        <br className="hidden sm:inline" />
                         mint neked lesz az
                     </span>
-                    <br/>
-                    <FlipWords
-                        words={words}
-                        className="inline-block font-medium text-black dark:text-black"
-                    />
-                    <br/>
+                    <br />
+                    <span className="inline-block h-[1.2em] md:h-[1.1em] overflow-hidden">
+                        <FlipWords
+                            words={words}
+                            className="inline-block font-medium text-black dark:text-black"
+                        />
+                    </span>
+                    <br />
                     <span className="font-medium text-violet-600">
                         ha eljössz az óráinkra
                     </span>

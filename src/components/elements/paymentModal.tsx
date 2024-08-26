@@ -110,7 +110,6 @@ const PaymentModal: React.FC<PaymentModalProps> = ({ isOpen, onClose }) => {
                                 {currentScreen !== 'main' ? (
                                     <button onClick={handleBack} className="text-gray-500 hover:text-gray-700 flex items-center">
                                         <ArrowLeftIcon size={24} className="mr-2" />
-                                        Vissza
                                     </button>
                                 ) : (
                                     <div className="w-[72px]"></div>
