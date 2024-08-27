@@ -8,6 +8,7 @@ import { Pricing } from "@/components/elements/pricing";
 import { Navbar } from "@/components/ui/navlinks"
 import { BentoGrid } from "@/components/ui/bento-grid";
 import AbelIntro from "@/components/elements/abelntro";
+
 export default function Home() {
   return (
       <div>
