@@ -32,7 +32,7 @@ export default function Home() {
           <section id="témakörök">
             <p className="text-neutral-500 text-xl md:text-3xl max-w-xl mx-auto mb-10 text-center">
             <span className="font-bold text-violet-600">
-              Olvasd el
+              Olvasd el,
             </span>{" "}
               mi mindenről tanulhatsz nálunk!
             </p>

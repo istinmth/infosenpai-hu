@@ -78,19 +78,19 @@ export default function InstructorsIntro(): JSX.Element {
         {
             name: "Ábel",
             introduction: [
-                "Németh Ábel Adrián vagyok, harmadéves hallgató a Budapesti Műszaki és Gazdasági egyetem mérnökinformatika szakán. Már kiskoromban kialakult a szerelgetés és a technika iránti érdeklődésem, melyhez valószínűleg az is hozzájárult, hogy édesapám is informatikus. Így hát nem volt kérdés számomra, hogy milyen irányban szeretnék tovább tanulni.",
-                "2021-ben tettem le az előrehozott középszintű informatika érettségit, majd 2022-ben szintemelő érettségit tettem a tárgyból. Azóta elmélyítettem a tudásom C, C++, C# és JAVA programozási nyelvekben, adatbáziskezelésben, megtanultam hogyan lehet optimális hálózatokat tervezni és üzemeltetni és még sok érdekes, ide nem releváns mérnöki megoldást ismerhettem meg.",
-        "Úgy gondolom, hogy akit nem érdekelnek annyira a számítógépek, mint engem, azoknak is nagyon fontos, hogy egy alapvető tudást szerezzenek, mert az életünkben egyre fontosabb szerepet tölt be a számítógép, és aki nem tudja megfelelően használni, piaci hátrányba fog kerülni.",
-        "Annak pedig, aki informatikai szakirányba szeretne tovább tanulni, sok érdekes történettel, tippel, tapasztalattal tudok szolgálni. Az egyetemen sokkal gyorsabb a tempó, mint gimnáziumban és ha nem elég felkészült az ember, könnyű lemaradni. Mi egy kissé előre tekintünk, így már nem lesz annyira új és érthetetlen, amit tanultok."
+                "Németh Ábel Adrián vagyok, harmadéves hallgató a Budapesti Műszaki és Gazdasági Egyetem mérnökinformatika szakán. Már kiskoromban kialakult a szerelgetés és a technika iránti érdeklődésem, melyhez valószínűleg az is hozzájárult, hogy édesapám is informatikus. Így hát nem volt kérdés számomra, hogy milyen irányban szeretnék továbbtanulni.",
+                "2021-ben tettem le az előrehozott középszintű informatikaérettségit, majd 2022-ben szintemelő érettségit tettem a tárgyból. Azóta elmélyítettem a tudásom C, C++, C# és JAVA programozási nyelvekben, adatbáziskezelésben, megtanultam, hogyan lehet optimális hálózatokat tervezni és üzemeltetni, valamint sok érdekes mérnöki megoldást ismerhettem meg.",
+        "Úgy gondolom, hogy akik kevésbé érdeklődnek a számítógépek iránt, azoknak is nagyon fontos, hogy alapvető tudást szerezzenek, mert az életünkben egyre meghatározóbb szerepet tölt be a számítógép, és aki nem tudja megfelelően használni, piaci hátrányba kerül.",
+        "Annak pedig, aki informatikai szakirányba szeretne továbbtanulni, sok érdekes történettel, tippel, tapasztalattal tudok szolgálni. Az egyetemen jelentősen magasabbak az elvárások, mint gimnáziumban, és ha nem elég felkészült az ember, jobban fenyegeti a lemorzsolódás. Segítünk nektek előretekinteni, így már nem lesz annyira új és bonyolult a tananyag."
             ],
             imageSrc: "/AbelProfil.jpg"
         },
         {
             name: "István",
             introduction: [
-                "Németh István Ákos vagyok, másodéves hallgató a Corvinus gazdaságinformatika szakán. 2022-ben tettem emelt szintű informatikaérettségit, ezután pedig egy évig dolgoztam IT projektvezetőként. Jelenleg az egyetem mellett belső fejlesztésekkel és adatelemzéssel foglalkozom egy járműpiaci adatokkal kereskedő cégnél.",
-                "Részletesebben ismerem a C++, C#, Python, JavaScript/TypeScript nyelveket, sokat foglalkoztam adatbázisokkal, webfejlesztéssel és designnal is. Különösen érdekelnek a pénzügyi szektorhoz kapcsolódó informatikai megoldások, a gazdaság és a technológia kapcsolata, emellett kiskorom óta lenyűgöz a repülés és az ehhez, illetve a repülőtereken is megszokott biometrikus azonosítórendszerekhez kapcsolódó számomra elképesztő hatékonyságú technológia.",
-                "Az informatikaérettségi sajnos nem mindig arra fókuszál, ami később valóban lényeges lesz, illetve sokszor egyértelműen akarnak valamit a feladatok, amit órán nem tanítanak meg, én pedig pontosan ezeket a tippeket és trükköket szeretném megmutatni nektek, hogy egyetemre már felkészültebben mehessetek."
+                "Németh István Ákos vagyok, másodéves hallgató a Corvinus Egyetem gazdaságinformatika szakán. 2022-ben tettem emelt szintű informatikaérettségit, ezután pedig egy évig dolgoztam IT projektvezetőként. Jelenleg az egyetem mellett belső fejlesztésekkel és adatelemzéssel foglalkozom egy járműpiaci adatokkal kereskedő cégnél.",
+                "Részletesebben ismerem a C++, C#, Python, JavaScript/TypeScript nyelveket, sokat foglalkoztam adatbázisokkal, webfejlesztéssel és designnal is. Különösen érdekelnek a pénzügyi szektorhoz kapcsolódó informatikai megoldások, a gazdaság és a technológia kapcsolata, emellett kiskorom óta lenyűgöz a repülés és az ehhez, illetve a repülőtereken is megszokott biometrikus azonosító-rendszerekhez kapcsolódó, számomra elképesztő hatékonyságú technológia.",
+                "Az informatikaérettségi tematikája nem mindig arra fókuszál, ami később valóban lényeges lesz, illetve sokszor egyértelműen akarnak valamit a feladatok, amit órán nem tanítanak meg, én pedig pontosan ezeket a tippeket és trükköket szeretném megmutatni nektek, hogy egyetemre már felkészültebben mehessetek."
             ],
             imageSrc: "/IstvanProfil.jpg"
         }
