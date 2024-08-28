@@ -1,5 +1,4 @@
-"use client"
-import React, {useEffect, useState} from 'react';
+import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { XIcon, CheckIcon, ChevronDownIcon, ChevronUpIcon, ArrowLeftIcon } from 'lucide-react';
 import Link from 'next/link';
@@ -7,7 +6,6 @@ import Link from 'next/link';
 interface PaymentModalProps {
     isOpen: boolean;
     onClose: () => void;
-    initialScreen?: 'main' | 'registration';
 }
 
 type ScreenType = 'main' | 'registration' | 'payment' | 'thankyou';
@@ -42,9 +40,9 @@ const LoadingDots = () => (
     </div>
 );
 
-const PaymentModal: React.FC<PaymentModalProps> = ({ isOpen, onClose, initialScreen = 'main' }) => {
+const PaymentModal: React.FC<PaymentModalProps> = ({ isOpen, onClose }) => {
     const [expandedTier, setExpandedTier] = useState<number | null>(null);
-    const [currentScreen, setCurrentScreen] = useState<ScreenType>(initialScreen);
+    const [currentScreen, setCurrentScreen] = useState<ScreenType>('main');
     const [selectedTier, setSelectedTier] = useState<number | null>(null);
     const [submissionStatus, setSubmissionStatus] = useState<SubmissionStatus>('idle');
     const [errorMessage, setErrorMessage] = useState<string | null>(null);
@@ -53,15 +51,6 @@ const PaymentModal: React.FC<PaymentModalProps> = ({ isOpen, onClose, initialScr
         firstName: '',
         email: ''
     });
-
-    useEffect(() => {
-        if (isOpen) {
-            setCurrentScreen(initialScreen);
-            setSelectedTier(null);
-            setSubmissionStatus('idle');
-            setErrorMessage(null);
-        }
-    }, [isOpen, initialScreen]);
 
     const pricingTiers = [
         {
@@ -77,23 +66,23 @@ const PaymentModal: React.FC<PaymentModalProps> = ({ isOpen, onClose, initialScr
         },
         {
             title: '4 Alkalom',
-            price: '26 500 Ft',
+            price: '25 000 Ft',
             description: 'Ideális felkészüléshez',
             features: [
                 '4 x 3 órás alkalom',
                 'Átfogó tananyag',
-                'Gyakorlati feladatok, házik',
-                'Egy témakör átlagosan négy óra'
+                'Gyakorlati feladatok',
+                'Személyre szabott visszajelzés'
             ]
         },
         {
-            title: '20 Alkalom',
-            price: '125 000 Ft',
+            title: '10 Alkalom',
+            price: '60 000 Ft',
             description: 'Teljes érettségi felkészítő csomag',
             features: [
-                '20 x 3 órás alkalom',
+                '10 x 3 órás alkalom',
                 'Teljes érettségi anyag lefedése',
-                'Ajándék szóbeli tételsor',
+                'Próbaérettségi',
                 'Egyéni konzultációk',
             ]
         }
@@ -132,9 +121,6 @@ const PaymentModal: React.FC<PaymentModalProps> = ({ isOpen, onClose, initialScr
         setSubmissionStatus('submitting');
         setErrorMessage(null);
         try {
-            if (selectedTier === null) {
-                throw new Error('No tier selected');
-            }
             const response = await fetch('/api/form-submission', {
                 method: 'POST',
                 headers: {
@@ -142,8 +128,8 @@ const PaymentModal: React.FC<PaymentModalProps> = ({ isOpen, onClose, initialScr
                 },
                 body: JSON.stringify({
                     ...formData,
-                    tier: selectedTier === 0 ? 'Free Trial' : pricingTiers[selectedTier].title,
-                    price: pricingTiers[selectedTier].price
+                    tier: selectedTier === 0 ? 'Free Trial' : pricingTiers[selectedTier!].title,
+                    price: pricingTiers[selectedTier!].price
                 }),
             });
 
@@ -307,12 +293,9 @@ const PaymentModal: React.FC<PaymentModalProps> = ({ isOpen, onClose, initialScr
                                         >
                                             <div className="flex-grow flex flex-col items-center justify-center">
                                                 <div className="space-y-6 w-full max-w-md">
-                                                    <h2 className="text-xl md:text-2xl font-bold text-violet-600">
-                                                        {selectedTier !== null
-                                                            ? `Regisztráció: ${pricingTiers[selectedTier].title}`
-                                                            : 'Regisztráció a próbaalkalomra'}
-                                                    </h2>
-                                                    <form onSubmit={handleRegistrationSubmit}>
+                                                    <h2 className="text-lg md:text-2xl font-bold text-violet-600">Regisztráció
+                                                        a próbaalkalomra</h2>
+                                                    <form onSubmit={handleRegistrationSubmit} className="space-y-4">
                                                         <div className="flex space-x-4">
                                                             <div className="flex-1">
                                                                 <label htmlFor="lastName"
@@ -323,7 +306,7 @@ const PaymentModal: React.FC<PaymentModalProps> = ({ isOpen, onClose, initialScr
                                                                     name="lastName"
                                                                     value={formData.lastName}
                                                                     onChange={handleInputChange}
-                                                                    className="w-full px-3 py-2 bg-gray-50 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-violet-500 focus:border-transparent"
+                                                                    className="w-full px-3 py-2 bg-gray-50 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-violet-500 focus:border-transparent text-sm"
                                                                     placeholder="Kovács"
                                                                     required
                                                                 />
@@ -337,13 +320,13 @@ const PaymentModal: React.FC<PaymentModalProps> = ({ isOpen, onClose, initialScr
                                                                     name="firstName"
                                                                     value={formData.firstName}
                                                                     onChange={handleInputChange}
-                                                                    className="w-full px-3 py-2 bg-gray-50 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-violet-500 focus:border-transparent"
+                                                                    className="w-full px-3 py-2 bg-gray-50 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-violet-500 focus:border-transparent text-sm"
                                                                     placeholder="János"
                                                                     required
                                                                 />
                                                             </div>
                                                         </div>
-                                                        <div className="mt-4">
+                                                        <div>
                                                             <label htmlFor="email"
                                                                    className="block text-sm font-medium text-gray-700 mb-1">E-mail
                                                                 cím</label>
@@ -353,14 +336,14 @@ const PaymentModal: React.FC<PaymentModalProps> = ({ isOpen, onClose, initialScr
                                                                 name="email"
                                                                 value={formData.email}
                                                                 onChange={handleInputChange}
-                                                                className="w-full px-3 py-2 bg-gray-50 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-violet-500 focus:border-transparent"
+                                                                className="w-full px-3 py-2 bg-gray-50 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-violet-500 focus:border-transparent text-sm"
                                                                 placeholder="pelda@email.com"
                                                                 required
                                                             />
                                                         </div>
                                                         <button
                                                             type="submit"
-                                                            className="mt-6 w-full bg-violet-600 text-white rounded-md py-3 font-medium hover:bg-violet-700 transition-colors duration-200 shadow-md hover:shadow-lg flex items-center justify-center"
+                                                            className="w-full bg-violet-600 text-white rounded-md py-2 font-medium hover:bg-violet-700 transition-colors duration-200 shadow-md hover:shadow-lg flex items-center justify-center text-sm"
                                                             disabled={submissionStatus === 'submitting'}
                                                         >
                                                             {submissionStatus === 'submitting' ? (
@@ -375,7 +358,7 @@ const PaymentModal: React.FC<PaymentModalProps> = ({ isOpen, onClose, initialScr
                                                         </button>
                                                     </form>
                                                     {errorMessage && (
-                                                        <p className="text-red-500 text-sm mt-2">{errorMessage}</p>
+                                                        <p className="text-red-500 text-xs mt-2">{errorMessage}</p>
                                                     )}
                                                     <p className="text-xs text-center text-gray-500">
                                                         A regisztrációval elfogadod az{' '}
@@ -403,11 +386,10 @@ const PaymentModal: React.FC<PaymentModalProps> = ({ isOpen, onClose, initialScr
                                             <div className="flex-grow flex flex-col items-center justify-center">
                                                 <h2 className="text-xl md:text-2xl font-bold mb-6 self-start">Fizetés</h2>
                                                 <div className="space-y-4 w-full max-w-md">
-                                                    <p className="text-lg font-semibold">
-                                                        Fizetési összeg: {selectedTier !== null ? pricingTiers[selectedTier].price : 'N/A'}
-                                                    </p>
+                                                    <p className="text-lg font-semibold">Fizetési
+                                                        összeg: {pricingTiers[selectedTier!].price}</p>
                                                     <div className="bg-gray-100 p-4 rounded-md">
-                                                        <p className="text-center text-gray-600">Itt lesz majd a Stripe Embed.</p>
+                                                        <p className="text-center text-gray-600 text-sm">Itt lesz majd a Stripe Embed.</p>
                                                     </div>
                                                 </div>
                                             </div>
@@ -425,11 +407,11 @@ const PaymentModal: React.FC<PaymentModalProps> = ({ isOpen, onClose, initialScr
                                             className="absolute inset-0 flex flex-col items-center justify-center"
                                         >
                                             <div className="text-center space-y-4">
-                                                <h2 className="text-2xl md:text-3xl font-bold text-violet-600">Köszönjük a regisztrációt!</h2>
-                                                <p className="text-lg text-gray-600">Hamarosan küldünk egy visszaigazoló e-mailt a megadott címre.</p>
+                                                <h2 className="text-xl md:text-3xl font-bold text-violet-600">Köszönjük a regisztrációt!</h2>
+                                                <p className="text-sm md:text-lg text-gray-600">Hamarosan küldünk egy visszaigazoló e-mailt a megadott címre.<br/>   Ha nem találod, nézd meg a spam mappában is!</p>
                                                 <button
                                                     onClick={onClose}
-                                                    className="mt-6 px-6 py-2 bg-violet-600 text-white rounded-md font-medium hover:bg-violet-700 transition-colors duration-200"
+                                                    className="mt-6 px-6 py-2 bg-violet-600 text-white rounded-md font-medium hover:bg-violet-700 transition-colors duration-200 text-sm"
                                                 >
                                                     Bezárás
                                                 </button>
