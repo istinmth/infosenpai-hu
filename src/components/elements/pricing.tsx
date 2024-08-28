@@ -30,7 +30,7 @@ export function Pricing() {
               </p>
               <div className="mt-10 flex items-center gap-x-4">
                 <h4 className="flex-none text-sm font-semibold leading-6 text-violet-600">Mire számíthatsz?</h4>
-                <div className="h-px flex-auto bg-gray-500" />
+                <div className="h-px flex-auto bg-gray-500"/>
               </div>
               <ul
                   role="list"
@@ -38,14 +38,18 @@ export function Pricing() {
               >
                 {includedFeatures.map((feature) => (
                     <li key={feature} className="flex gap-x-3">
-                      <CheckIcon className="h-6 w-5 flex-none text-violet-600" aria-hidden="true" />
+                      <CheckIcon className="h-6 w-5 flex-none text-violet-600" aria-hidden="true"/>
                       {feature}
                     </li>
                 ))}
               </ul>
+              <p className="mt-28 text-sm text-black text-left font-semibold">
+                A teljes kurzus 20 + 1 óra összesen, az 1 óra az ingyenes próbaalkalom.
+              </p>
             </div>
             <div className="-mt-2 p-2 lg:mt-0 lg:w-full lg:max-w-md lg:flex-shrink-0">
-              <div className="rounded-2xl bg-gray-50 py-10 text-center ring-1 ring-inset ring-gray-900/5 lg:flex lg:flex-col lg:justify-center lg:py-16">
+              <div
+                  className="rounded-2xl bg-gray-50 py-10 text-center ring-1 ring-inset ring-gray-900/5 lg:flex lg:flex-col lg:justify-center lg:py-16">
                 <div className="mx-auto max-w-xs px-8">
                   <p className="text-base font-semibold text-gray-600">Az első előadás ingyenes, utána alkalmanként</p>
                   <p className="mt-6 flex items-baseline justify-center gap-x-2">
