@@ -6,9 +6,24 @@ import GoogleAnalytics from '@/components/elements/GoogleAnalytics';
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-    title: "InfoSenpai",
-    description: "Informatikaérettségi-felkészítő 10-12. osztályos diákoknak. Velünk gyerekjáték lesz az infóérettségi!",
-};
+    title: 'InfoSenpai',
+    description: 'Informatikaérettségi felkészítő 10-12. osztályos diákoknak. Velünk gyerekjáték lesz az érettségi!',
+    openGraph: {
+        title: 'InfoSenpai',
+        description: 'Informatikaérettségi felkészítő 10-12. osztályos diákoknak. Velünk gyerekjáték lesz az érettségi!',
+        url: 'https://infosenpai.hu',
+        siteName: 'InfoSenpai',
+        images: [
+            {
+                url: 'https://www.infosenpai.hu/_next/image?url=%2Fujkep.png&w=1920&q=75',
+                width: 800,
+                height: 600,
+            },
+        ],
+        locale: 'hu_HU',
+        type: 'website',
+    },
+}
 
 export default function RootLayout({
                                        children,

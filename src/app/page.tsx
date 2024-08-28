@@ -8,8 +8,18 @@ import { Pricing } from "@/components/elements/pricing";
 import { Navbar } from "@/components/ui/navlinks"
 import { BentoGrid } from "@/components/ui/bento-grid";
 import AbelIntro from "@/components/elements/abelntro";
+import { useState } from 'react';
+import PaymentModal from "@/components/elements/paymentModal";
 
 export default function Home() {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [initialModalScreen, setInitialModalScreen] = useState<'main' | 'registration'>('main');
+
+  const handleRegisterClick = () => {
+    setInitialModalScreen('registration');
+    setIsModalOpen(true);
+  };
+
   return (
       <div>
         <Head> <title>Alma</title> </Head>
@@ -17,7 +27,7 @@ export default function Home() {
           <Navbar/>
           <BoxesGrid/>
           <section id="főcím">
-            <FlipWordsDemo/>
+            <FlipWordsDemo onRegisterClick={handleRegisterClick}/>
           </section>
           <section id="témakörök">
             <p className="text-neutral-500 text-xl md:text-3xl max-w-xl mx-auto mb-10 text-center">
@@ -41,6 +51,11 @@ export default function Home() {
           </section>
             <section id="signup">
             </section>
+          <PaymentModal
+              isOpen={isModalOpen}
+              onClose={() => setIsModalOpen(false)}
+              initialScreen={initialModalScreen}
+          />
         </main>
       </div>
   );

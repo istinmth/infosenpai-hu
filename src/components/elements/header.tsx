@@ -1,7 +1,7 @@
 import React from "react";
 import { FlipWords } from "../ui/flip-words";
 
-export function FlipWordsDemo() {
+export function FlipWordsDemo({ onRegisterClick }: { onRegisterClick: () => void }) {
     const words = ["infóérettségi,", "egyetem,", "ECDL-vizsga"];
 
     const handleNezzukClick = () => {
@@ -22,7 +22,7 @@ export function FlipWordsDemo() {
             <div className="mb-6 sm:mb-6 flex justify-center w-full">
                 <div className="relative rounded-full px-3 py-1 text-sm leading-6 text-gray-600 ring-1 ring-gray-900/10 hover:ring-gray-900/20 text-center max-w-full">
                     <span className="">Regisztrálj most az ingyenes</span>{' '}
-                    <a href="#" className="font-semibold text-violet-600 whitespace-nowrap">
+                    <a href="#" className="font-semibold text-violet-600 whitespace-nowrap" onClick={onRegisterClick}>
                         <span className="absolute inset-0" aria-hidden="true"/>
                         próbaalkalomra <span aria-hidden="true">&rarr;</span>
                     </a>

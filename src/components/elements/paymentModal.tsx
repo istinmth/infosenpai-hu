@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+"use client"
+import React, {useEffect, useState} from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { XIcon, CheckIcon, ChevronDownIcon, ChevronUpIcon, ArrowLeftIcon } from 'lucide-react';
 import Link from 'next/link';
@@ -6,6 +7,7 @@ import Link from 'next/link';
 interface PaymentModalProps {
     isOpen: boolean;
     onClose: () => void;
+    initialScreen?: 'main' | 'registration';
 }
 
 type ScreenType = 'main' | 'registration' | 'payment' | 'thankyou';
@@ -40,9 +42,9 @@ const LoadingDots = () => (
     </div>
 );
 
-const PaymentModal: React.FC<PaymentModalProps> = ({ isOpen, onClose }) => {
+const PaymentModal: React.FC<PaymentModalProps> = ({ isOpen, onClose, initialScreen = 'main' }) => {
     const [expandedTier, setExpandedTier] = useState<number | null>(null);
-    const [currentScreen, setCurrentScreen] = useState<ScreenType>('main');
+    const [currentScreen, setCurrentScreen] = useState<ScreenType>(initialScreen);
     const [selectedTier, setSelectedTier] = useState<number | null>(null);
     const [submissionStatus, setSubmissionStatus] = useState<SubmissionStatus>('idle');
     const [errorMessage, setErrorMessage] = useState<string | null>(null);
@@ -51,6 +53,15 @@ const PaymentModal: React.FC<PaymentModalProps> = ({ isOpen, onClose }) => {
         firstName: '',
         email: ''
     });
+
+    useEffect(() => {
+        if (isOpen) {
+            setCurrentScreen(initialScreen);
+            setSelectedTier(null);
+            setSubmissionStatus('idle');
+            setErrorMessage(null);
+        }
+    }, [isOpen, initialScreen]);
 
     const pricingTiers = [
         {
@@ -66,23 +77,23 @@ const PaymentModal: React.FC<PaymentModalProps> = ({ isOpen, onClose }) => {
         },
         {
             title: '4 Alkalom',
-            price: '25 000 Ft',
+            price: '26 500 Ft',
             description: 'Ideális felkészüléshez',
             features: [
                 '4 x 3 órás alkalom',
                 'Átfogó tananyag',
-                'Gyakorlati feladatok',
-                'Személyre szabott visszajelzés'
+                'Gyakorlati feladatok, házik',
+                'Egy témakör átlagosan négy óra'
             ]
         },
         {
-            title: '10 Alkalom',
-            price: '60 000 Ft',
+            title: '20 Alkalom',
+            price: '125 000 Ft',
             description: 'Teljes érettségi felkészítő csomag',
             features: [
-                '10 x 3 órás alkalom',
+                '20 x 3 órás alkalom',
                 'Teljes érettségi anyag lefedése',
-                'Próbaérettségi',
+                'Ajándék szóbeli tételsor',
                 'Egyéni konzultációk',
             ]
         }
@@ -121,6 +132,9 @@ const PaymentModal: React.FC<PaymentModalProps> = ({ isOpen, onClose }) => {
         setSubmissionStatus('submitting');
         setErrorMessage(null);
         try {
+            if (selectedTier === null) {
+                throw new Error('No tier selected');
+            }
             const response = await fetch('/api/form-submission', {
                 method: 'POST',
                 headers: {
@@ -128,8 +142,8 @@ const PaymentModal: React.FC<PaymentModalProps> = ({ isOpen, onClose }) => {
                 },
                 body: JSON.stringify({
                     ...formData,
-                    tier: selectedTier === 0 ? 'Free Trial' : pricingTiers[selectedTier!].title,
-                    price: pricingTiers[selectedTier!].price
+                    tier: selectedTier === 0 ? 'Free Trial' : pricingTiers[selectedTier].title,
+                    price: pricingTiers[selectedTier].price
                 }),
             });
 
@@ -293,8 +307,11 @@ const PaymentModal: React.FC<PaymentModalProps> = ({ isOpen, onClose }) => {
                                         >
                                             <div className="flex-grow flex flex-col items-center justify-center">
                                                 <div className="space-y-6 w-full max-w-md">
-                                                    <h2 className="text-xl md:text-2xl font-bold text-violet-600">Regisztráció
-                                                        a próbaalkalomra</h2>
+                                                    <h2 className="text-xl md:text-2xl font-bold text-violet-600">
+                                                        {selectedTier !== null
+                                                            ? `Regisztráció: ${pricingTiers[selectedTier].title}`
+                                                            : 'Regisztráció a próbaalkalomra'}
+                                                    </h2>
                                                     <form onSubmit={handleRegistrationSubmit}>
                                                         <div className="flex space-x-4">
                                                             <div className="flex-1">
@@ -386,8 +403,9 @@ const PaymentModal: React.FC<PaymentModalProps> = ({ isOpen, onClose }) => {
                                             <div className="flex-grow flex flex-col items-center justify-center">
                                                 <h2 className="text-xl md:text-2xl font-bold mb-6 self-start">Fizetés</h2>
                                                 <div className="space-y-4 w-full max-w-md">
-                                                    <p className="text-lg font-semibold">Fizetési
-                                                        összeg: {pricingTiers[selectedTier!].price}</p>
+                                                    <p className="text-lg font-semibold">
+                                                        Fizetési összeg: {selectedTier !== null ? pricingTiers[selectedTier].price : 'N/A'}
+                                                    </p>
                                                     <div className="bg-gray-100 p-4 rounded-md">
                                                         <p className="text-center text-gray-600">Itt lesz majd a Stripe Embed.</p>
                                                     </div>

@@ -1,7 +1,6 @@
-// app/api/form-submission/route.ts
-
 import { NextResponse } from 'next/server';
 import { MongoClient, ServerApiVersion, MongoServerError } from 'mongodb';
+import SendConfirmationEmail from "@/app/api/emailService";
 
 const uri = process.env.MONGODB_URI;
 
@@ -43,6 +42,16 @@ export async function POST(request: Request) {
         });
 
         console.log('Registration stored successfully', result);
+
+        // Send confirmation email
+        try {
+            const emailResult = await SendConfirmationEmail(firstName, email);
+            console.log('Confirmation email sent successfully:', emailResult);
+        } catch (emailError) {
+            console.error('Error sending confirmation email:', emailError);
+            // Note: We're not returning here, as we want to return a success response even if the email fails
+        }
+
         return NextResponse.json({ message: "Registration stored successfully", id: result.insertedId }, { status: 200 });
     } catch (error: unknown) {
         console.error('Error processing registration:', error);
