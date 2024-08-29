@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { XIcon, CheckIcon, ChevronDownIcon, ChevronUpIcon, ArrowLeftIcon } from 'lucide-react';
 import Link from 'next/link';
+import { loadStripe } from '@stripe/stripe-js';
+import { Elements, PaymentElement, AddressElement, useStripe, useElements } from '@stripe/react-stripe-js';
 
 interface PaymentModalProps {
     isOpen: boolean;
@@ -9,14 +11,28 @@ interface PaymentModalProps {
     initialScreen?: ScreenType;
 }
 
-type ScreenType = 'main' | 'registration' | 'payment' | 'thankyou';
+type ScreenType = 'main' | 'registration' | 'billing' | 'payment' | 'thankyou';
 type SubmissionStatus = 'idle' | 'submitting' | 'success' | 'error';
+
+interface BillingDetails {
+    name: string;
+    email: string;
+    address: {
+        line1: string;
+        city: string;
+        postal_code: string;
+        country: string;
+    };
+}
+
+const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY!);
 
 const ProgressIndicator: React.FC<{ currentStep: number }> = ({ currentStep }) => {
     return (
         <div className="flex items-center justify-center space-x-2">
             <div className={`w-3 h-3 rounded-full ${currentStep === 1 ? 'bg-violet-600' : 'bg-gray-300'}`} />
             <div className={`w-3 h-3 rounded-full ${currentStep === 2 ? 'bg-violet-600' : 'bg-gray-300'}`} />
+            <div className={`w-3 h-3 rounded-full ${currentStep === 3 ? 'bg-violet-600' : 'bg-gray-300'}`} />
         </div>
     );
 };
@@ -41,10 +57,104 @@ const LoadingDots = () => (
     </div>
 );
 
+const StripePaymentForm: React.FC<{ amount: number, onSuccess: () => void }> = ({ amount, onSuccess }) => {
+    const stripe = useStripe();
+    const elements = useElements();
+    const [errorMessage, setErrorMessage] = useState<string | null>(null);
+    const [isProcessing, setIsProcessing] = useState(false);
+
+    const handleSubmit = async (event: React.FormEvent) => {
+        event.preventDefault();
+
+        if (!stripe || !elements) {
+            return;
+        }
+
+        setIsProcessing(true);
+
+        const { error, paymentIntent } = await stripe.confirmPayment({
+            elements,
+            confirmParams: {
+                return_url: window.location.href,
+            },
+            redirect: 'if_required',
+        });
+
+        if (error) {
+            setErrorMessage(error.message || 'Ismeretlen hiba történt');
+            setIsProcessing(false);
+        } else if (paymentIntent && paymentIntent.status === 'succeeded') {
+            onSuccess();
+        } else if (paymentIntent && paymentIntent.status === 'requires_action') {
+            if (paymentIntent.client_secret) {
+                const { error: confirmError } = await stripe.confirmCardPayment(paymentIntent.client_secret);
+                if (confirmError) {
+                    setErrorMessage(`3DS hitelesítési hiba: ${confirmError.message}`);
+                } else {
+                    onSuccess();
+                }
+            } else {
+                setErrorMessage('Hiba történt a fizetés során: hiányzó client_secret');
+            }
+        } else {
+            setErrorMessage('Váratlan hiba történt.');
+        }
+        setIsProcessing(false);
+    };
+
+    return (
+        <form onSubmit={handleSubmit}>
+            <PaymentElement />
+            <button
+                type="submit"
+                disabled={!stripe || isProcessing}
+                className="mt-4 w-full bg-violet-600 text-white rounded-md py-2 font-medium transition-colors duration-200 hover:bg-violet-700 disabled:bg-gray-400"
+            >
+                {isProcessing ? 'Egy pillanat...' : `Fizetek ${amount} Ft-ot`}
+            </button>
+            {errorMessage && <div className="mt-4 text-red-500">{errorMessage}</div>}
+        </form>
+    );
+};
+
+const BillingForm: React.FC<{ onSubmit: () => void }> = ({ onSubmit }) => {
+    const stripe = useStripe();
+    const elements = useElements();
+
+    const handleSubmit = async (event: React.FormEvent) => {
+        event.preventDefault();
+        if (!stripe || !elements) {
+            return;
+        }
+        onSubmit();
+    };
+
+    return (
+        <form onSubmit={handleSubmit} className="space-y-4">
+            <AddressElement
+                options={{
+                    mode: 'billing',
+                    defaultValues: {
+                        address: {
+                            country: 'HU',
+                        },
+                    },
+                }}
+            />
+            <button
+                type="submit"
+                className="w-full bg-violet-600 text-white rounded-md py-2 font-medium transition-colors duration-200 hover:bg-violet-700"
+            >
+                Tovább a fizetéshez
+            </button>
+        </form>
+    );
+};
+
 const PaymentModal: React.FC<PaymentModalProps> = ({ isOpen, onClose, initialScreen = 'main' }) => {
     const [expandedTier, setExpandedTier] = useState<number | null>(null);
     const [currentScreen, setCurrentScreen] = useState<ScreenType>(initialScreen);
-    const [selectedTier, setSelectedTier] = useState<number>(0);  // Default to free tier (index 0)
+    const [selectedTier, setSelectedTier] = useState<number>(0);
     const [submissionStatus, setSubmissionStatus] = useState<SubmissionStatus>('idle');
     const [errorMessage, setErrorMessage] = useState<string | null>(null);
     const [honeypot, setHoneypot] = useState('');
@@ -53,9 +163,10 @@ const PaymentModal: React.FC<PaymentModalProps> = ({ isOpen, onClose, initialScr
         firstName: '',
         email: ''
     });
-
     const [isEmailRegistered, setIsEmailRegistered] = useState(false);
     const [isEmailChanged, setIsEmailChanged] = useState(false);
+    const [clientSecret, setClientSecret] = useState<string | null>(null);
+    const [billingDetails, setBillingDetails] = useState<BillingDetails | null>(null);
 
     const pricingTiers = [
         {
@@ -71,7 +182,7 @@ const PaymentModal: React.FC<PaymentModalProps> = ({ isOpen, onClose, initialScr
         },
         {
             title: '4 Alkalom',
-            price: '26 500 Ft',
+            price: '26500',
             description: 'Ideális egy témakörhöz',
             features: [
                 '4 x 3 órás alkalom',
@@ -82,7 +193,7 @@ const PaymentModal: React.FC<PaymentModalProps> = ({ isOpen, onClose, initialScr
         },
         {
             title: '20 Alkalom',
-            price: '125 000 Ft',
+            price: '125000',
             description: 'Teljes érettségi felkészítő csomag',
             features: [
                 '20 x 3 órás alkalom',
@@ -96,9 +207,21 @@ const PaymentModal: React.FC<PaymentModalProps> = ({ isOpen, onClose, initialScr
     useEffect(() => {
         if (isOpen) {
             setCurrentScreen(initialScreen);
-            setSelectedTier(0);  // Reset to free tier when modal opens
+            setSelectedTier(0);
         }
     }, [isOpen, initialScreen]);
+
+    useEffect(() => {
+        if (currentScreen === 'billing' && selectedTier > 0) {
+            fetch('/api/create-payment-intent', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ amount: parseInt(pricingTiers[selectedTier].price) }),
+            })
+                .then((res) => res.json())
+                .then((data) => setClientSecret(data.clientSecret));
+        }
+    }, [currentScreen, selectedTier]);
 
     const handleTierClick = (index: number) => {
         setExpandedTier(expandedTier === index ? null : index);
@@ -109,12 +232,18 @@ const PaymentModal: React.FC<PaymentModalProps> = ({ isOpen, onClose, initialScr
         if (index === 0) {
             setCurrentScreen('registration');
         } else {
-            setCurrentScreen('payment');
+            setCurrentScreen('billing');
         }
     };
 
     const handleBack = () => {
-        setCurrentScreen('main');
+        if (currentScreen === 'payment') {
+            setCurrentScreen('billing');
+        } else if (currentScreen === 'billing') {
+            setCurrentScreen('main');
+        } else {
+            setCurrentScreen('main');
+        }
         setSubmissionStatus('idle');
         setErrorMessage(null);
     };
@@ -138,6 +267,14 @@ const PaymentModal: React.FC<PaymentModalProps> = ({ isOpen, onClose, initialScr
         }
     };
 
+    const handlePaymentSuccess = () => {
+        setCurrentScreen('thankyou');
+    };
+
+    const handleBillingDetailsSubmit = (details: BillingDetails) => {
+        setBillingDetails(details);
+        setCurrentScreen('payment');
+    };
 
     const handleRegistrationSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
@@ -186,7 +323,9 @@ const PaymentModal: React.FC<PaymentModalProps> = ({ isOpen, onClose, initialScr
             setErrorMessage('Hiba történt a kapcsolat során. Kérjük, ellenőrizd az internetkapcsolatod és próbáld újra.');
         }
     };
-
+    const handleBillingSubmit = () => {
+        setCurrentScreen('payment');
+    };
     const fadeVariants = {
         hidden: { opacity: 0 },
         visible: { opacity: 1 },
@@ -217,7 +356,7 @@ const PaymentModal: React.FC<PaymentModalProps> = ({ isOpen, onClose, initialScr
                     >
                         <div className="p-4 md:p-6 flex-grow overflow-y-auto">
                             <div className="flex justify-between items-center mb-4 md:mb-6">
-                                <div className="w-[72px]"> {/* Left column: Back button or empty space */}
+                                <div className="w-[72px]">
                                     {currentScreen !== 'main' && (
                                         <button onClick={handleBack}
                                                 className="text-gray-500 hover:text-gray-700 flex items-center">
@@ -225,10 +364,13 @@ const PaymentModal: React.FC<PaymentModalProps> = ({ isOpen, onClose, initialScr
                                         </button>
                                     )}
                                 </div>
-                                <div className="flex-grow flex justify-center"> {/* Center column: ProgressIndicator */}
-                                    <ProgressIndicator currentStep={currentScreen === 'main' ? 1 : 2}/>
+                                <div className="flex-grow flex justify-center">
+                                    <ProgressIndicator currentStep={
+                                        currentScreen === 'main' ? 1 :
+                                            currentScreen === 'registration' || currentScreen === 'billing' ? 2 : 3
+                                    }/>
                                 </div>
-                                <div className="w-[72px] flex justify-end"> {/* Right column: Close button */}
+                                <div className="w-[72px] flex justify-end">
                                     <button onClick={onClose} className="text-gray-500 hover:text-gray-700">
                                         <XIcon size={24}/>
                                     </button>
@@ -247,7 +389,7 @@ const PaymentModal: React.FC<PaymentModalProps> = ({ isOpen, onClose, initialScr
                                             transition={{duration: 0.2}}
                                             className="space-y-6"
                                         >
-                                        <h2 className="text-xl md:text-2xl font-bold">Mennyi órára szeretnél
+                                            <h2 className="text-xl md:text-2xl font-bold">Mennyi órára szeretnél
                                                 jönni?</h2>
                                             <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6">
                                                 {pricingTiers.map((tier, index) => (
@@ -262,7 +404,9 @@ const PaymentModal: React.FC<PaymentModalProps> = ({ isOpen, onClose, initialScr
                                                     >
                                                         <div className="md:text-left mb-2">
                                                             <h3 className="text-base md:text-lg font-semibold">{tier.title}</h3>
-                                                            <p className="text-lg md:text-2xl font-bold mt-1 md:mt-2 text-violet-500">{tier.price}</p>
+                                                            <p className="text-lg md:text-2xl font-bold mt-1 md:mt-2 text-violet-500">
+                                                                {index === 0 ? tier.price : `${tier.price} Ft`}
+                                                            </p>
                                                         </div>
                                                         <p className="text-xs md:text-sm text-gray-600 mb-2 md:mb-4 md:text-left">{tier.description}</p>
 
@@ -439,7 +583,28 @@ const PaymentModal: React.FC<PaymentModalProps> = ({ isOpen, onClose, initialScr
                                         </motion.div>
                                     )}
 
-                                    {currentScreen === 'payment' && (
+                                    {currentScreen === 'billing' && clientSecret && (
+                                        <motion.div
+                                            key="billing"
+                                            variants={slideVariants}
+                                            initial="hidden"
+                                            animate="visible"
+                                            exit="exit"
+                                            transition={{duration: 0.3}}
+                                            className="absolute inset-0 flex flex-col w-full h-full"
+                                        >
+                                            <div className="flex flex-col items-center justify-center mt-20">
+                                                <div className="space-y-6 w-full max-w-md">
+                                                    <h2 className="text-lg md:text-2xl font-bold text-violet-600">Számlázási adatok</h2>
+                                                    <Elements stripe={stripePromise} options={{ clientSecret }}>
+                                                        <BillingForm onSubmit={handleBillingSubmit} />
+                                                    </Elements>
+                                                </div>
+                                            </div>
+                                        </motion.div>
+                                    )}
+
+                                    {currentScreen === 'payment' && clientSecret && (
                                         <motion.div
                                             key="payment"
                                             variants={slideVariants}
@@ -449,20 +614,28 @@ const PaymentModal: React.FC<PaymentModalProps> = ({ isOpen, onClose, initialScr
                                             transition={{duration: 0.3}}
                                             className="absolute inset-0 flex flex-col w-full h-full"
                                         >
-                                            <div className="flex-grow flex flex-col items-center justify-center">
-                                                <h2 className="text-xl md:text-2xl font-bold mb-6 self-start">Fizetés</h2>
+                                            <div className="flex-grow flex flex-col items-center justify-center mt-20">
                                                 <div className="space-y-4 w-full max-w-md">
-                                                    <p className="text-lg font-semibold">Fizetési
-                                                        összeg: {pricingTiers[selectedTier].price}</p>
-                                                    <div className="bg-gray-100 p-4 rounded-md">
-                                                        <p className="text-center text-gray-600 text-sm">Itt lesz majd a
-                                                            Stripe Embed.</p>
-                                                    </div>
+                                                    <p className="text-lg font-semibold">Fizetési összeg: {pricingTiers[selectedTier].price} Ft</p>
+                                                    <Elements
+                                                        stripe={stripePromise}
+                                                        options={{
+                                                            clientSecret,
+                                                            locale: 'hu' as const,
+                                                            appearance: {
+                                                                theme: 'stripe',
+                                                            },
+                                                        }}
+                                                    >
+                                                        <StripePaymentForm
+                                                            amount={parseInt(pricingTiers[selectedTier].price)}
+                                                            onSuccess={handlePaymentSuccess}
+                                                        />
+                                                    </Elements>
                                                 </div>
                                             </div>
                                         </motion.div>
                                     )}
-
                                     {currentScreen === 'thankyou' && (
                                         <motion.div
                                             key="thankyou"
