@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { XIcon, CheckIcon, ChevronDownIcon, ChevronUpIcon, ArrowLeftIcon } from 'lucide-react';
 import Link from 'next/link';
@@ -6,6 +6,7 @@ import Link from 'next/link';
 interface PaymentModalProps {
     isOpen: boolean;
     onClose: () => void;
+    initialScreen?: ScreenType;
 }
 
 type ScreenType = 'main' | 'registration' | 'payment' | 'thankyou';
@@ -40,10 +41,10 @@ const LoadingDots = () => (
     </div>
 );
 
-const PaymentModal: React.FC<PaymentModalProps> = ({ isOpen, onClose }) => {
+const PaymentModal: React.FC<PaymentModalProps> = ({ isOpen, onClose, initialScreen = 'main' }) => {
     const [expandedTier, setExpandedTier] = useState<number | null>(null);
-    const [currentScreen, setCurrentScreen] = useState<ScreenType>('main');
-    const [selectedTier, setSelectedTier] = useState<number | null>(null);
+    const [currentScreen, setCurrentScreen] = useState<ScreenType>(initialScreen);
+    const [selectedTier, setSelectedTier] = useState<number>(0);  // Default to free tier (index 0)
     const [submissionStatus, setSubmissionStatus] = useState<SubmissionStatus>('idle');
     const [errorMessage, setErrorMessage] = useState<string | null>(null);
     const [formData, setFormData] = useState({
@@ -88,6 +89,13 @@ const PaymentModal: React.FC<PaymentModalProps> = ({ isOpen, onClose }) => {
         }
     ];
 
+    useEffect(() => {
+        if (isOpen) {
+            setCurrentScreen(initialScreen);
+            setSelectedTier(0);  // Reset to free tier when modal opens
+        }
+    }, [isOpen, initialScreen]);
+
     const handleTierClick = (index: number) => {
         setExpandedTier(expandedTier === index ? null : index);
     };
@@ -103,7 +111,6 @@ const PaymentModal: React.FC<PaymentModalProps> = ({ isOpen, onClose }) => {
 
     const handleBack = () => {
         setCurrentScreen('main');
-        setSelectedTier(null);
         setSubmissionStatus('idle');
         setErrorMessage(null);
     };
@@ -128,8 +135,8 @@ const PaymentModal: React.FC<PaymentModalProps> = ({ isOpen, onClose }) => {
                 },
                 body: JSON.stringify({
                     ...formData,
-                    tier: selectedTier === 0 ? 'Free Trial' : pricingTiers[selectedTier!].title,
-                    price: pricingTiers[selectedTier!].price
+                    tier: pricingTiers[selectedTier].title,
+                    price: pricingTiers[selectedTier].price
                 }),
             });
 
@@ -387,7 +394,7 @@ const PaymentModal: React.FC<PaymentModalProps> = ({ isOpen, onClose }) => {
                                                 <h2 className="text-xl md:text-2xl font-bold mb-6 self-start">Fizetés</h2>
                                                 <div className="space-y-4 w-full max-w-md">
                                                     <p className="text-lg font-semibold">Fizetési
-                                                        összeg: {pricingTiers[selectedTier!].price}</p>
+                                                        összeg: {pricingTiers[selectedTier].price}</p>
                                                     <div className="bg-gray-100 p-4 rounded-md">
                                                         <p className="text-center text-gray-600 text-sm">Itt lesz majd a Stripe Embed.</p>
                                                     </div>
@@ -408,7 +415,7 @@ const PaymentModal: React.FC<PaymentModalProps> = ({ isOpen, onClose }) => {
                                         >
                                             <div className="text-center space-y-4">
                                                 <h2 className="text-xl md:text-3xl font-bold text-violet-600">Köszönjük a regisztrációt!</h2>
-                                                <p className="text-sm md:text-lg text-gray-600">Hamarosan küldünk egy visszaigazoló e-mailt a megadott címre.<br/>   Ha nem találod, nézd meg a spam mappában is!</p>
+                                                <p className="text-sm md:text-lg text-gray-600">Hamarosan küldünk egy visszaigazoló e-mailt a megadott címre. <br/>Ha nem érkezik meg, csekkold a spam mappádat is!</p>
                                                 <button
                                                     onClick={onClose}
                                                     className="mt-6 px-6 py-2 bg-violet-600 text-white rounded-md font-medium hover:bg-violet-700 transition-colors duration-200 text-sm"
