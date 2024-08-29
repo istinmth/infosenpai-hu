@@ -47,11 +47,15 @@ const PaymentModal: React.FC<PaymentModalProps> = ({ isOpen, onClose, initialScr
     const [selectedTier, setSelectedTier] = useState<number>(0);  // Default to free tier (index 0)
     const [submissionStatus, setSubmissionStatus] = useState<SubmissionStatus>('idle');
     const [errorMessage, setErrorMessage] = useState<string | null>(null);
+    const [honeypot, setHoneypot] = useState('');
     const [formData, setFormData] = useState({
         lastName: '',
         firstName: '',
         email: ''
     });
+
+    const [isEmailRegistered, setIsEmailRegistered] = useState(false);
+    const [isEmailChanged, setIsEmailChanged] = useState(false);
 
     const pricingTiers = [
         {
@@ -67,21 +71,21 @@ const PaymentModal: React.FC<PaymentModalProps> = ({ isOpen, onClose, initialScr
         },
         {
             title: '4 Alkalom',
-            price: '25 000 Ft',
-            description: 'Ideális felkészüléshez',
+            price: '26 500 Ft',
+            description: 'Ideális egy témakörhöz',
             features: [
                 '4 x 3 órás alkalom',
-                'Átfogó tananyag',
-                'Gyakorlati feladatok',
+                'A tananyag egy témaköre',
+                'Gyakorlati feladatok, házik',
                 'Személyre szabott visszajelzés'
             ]
         },
         {
-            title: '10 Alkalom',
-            price: '60 000 Ft',
+            title: '20 Alkalom',
+            price: '125 000 Ft',
             description: 'Teljes érettségi felkészítő csomag',
             features: [
-                '10 x 3 órás alkalom',
+                '20 x 3 órás alkalom',
                 'Teljes érettségi anyag lefedése',
                 'Próbaérettségi',
                 'Egyéni konzultációk',
@@ -121,12 +125,26 @@ const PaymentModal: React.FC<PaymentModalProps> = ({ isOpen, onClose, initialScr
             ...prevData,
             [name]: value
         }));
+
+        if (name === 'email') {
+            setIsEmailChanged(true);
+            setIsEmailRegistered(false);
+            setSubmissionStatus('idle');
+            setErrorMessage(null);
+        }
+        if (name === 'honeypot') {
+            setHoneypot(value);
+            return;
+        }
     };
+
 
     const handleRegistrationSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         setSubmissionStatus('submitting');
         setErrorMessage(null);
+        setIsEmailRegistered(false);
+        setIsEmailChanged(false);
         try {
             const response = await fetch('/api/form-submission', {
                 method: 'POST',
@@ -144,7 +162,16 @@ const PaymentModal: React.FC<PaymentModalProps> = ({ isOpen, onClose, initialScr
 
             if (!response.ok) {
                 setSubmissionStatus('error');
-                setErrorMessage(data.error || 'An unexpected error occurred');
+                setErrorMessage(data.error || 'Váratlan hiba történt. Kérjük, próbáld újra később.');
+                if (response.status === 409) {
+                    setIsEmailRegistered(true);
+                }
+                return;
+            }
+            if (honeypot) {
+                console.log('Bot submission detected');
+                setSubmissionStatus('error');
+                setErrorMessage('Huncut kis robot vagy! 🤖');
                 return;
             }
 
@@ -156,11 +183,7 @@ const PaymentModal: React.FC<PaymentModalProps> = ({ isOpen, onClose, initialScr
         } catch (error: unknown) {
             console.error('Error submitting form:', error);
             setSubmissionStatus('error');
-            if (error instanceof Error) {
-                setErrorMessage(error.message);
-            } else {
-                setErrorMessage('An unexpected error occurred');
-            }
+            setErrorMessage('Hiba történt a kapcsolat során. Kérjük, ellenőrizd az internetkapcsolatod és próbáld újra.');
         }
     };
 
@@ -311,7 +334,7 @@ const PaymentModal: React.FC<PaymentModalProps> = ({ isOpen, onClose, initialScr
                                             transition={{duration: 0.3}}
                                             className="absolute inset-0 flex flex-col w-full h-full"
                                         >
-                                            <div className="flex-grow flex flex-col items-center justify-center">
+                                            <div className="flex flex-col items-center justify-center mt-20">
                                                 <div className="space-y-6 w-full max-w-md">
                                                     <h2 className="text-lg md:text-2xl font-bold text-violet-600">Regisztráció
                                                         a próbaalkalomra</h2>
@@ -329,6 +352,18 @@ const PaymentModal: React.FC<PaymentModalProps> = ({ isOpen, onClose, initialScr
                                                                     className="w-full px-3 py-2 bg-gray-50 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-violet-500 focus:border-transparent text-sm"
                                                                     placeholder="Kovács"
                                                                     required
+                                                                />
+                                                            </div>
+                                                            <div style={{display: 'none'}}>
+                                                                <label htmlFor="honeypot">Leave this field empty</label>
+                                                                <input
+                                                                    type="text"
+                                                                    id="honeypot"
+                                                                    name="honeypot"
+                                                                    value={honeypot}
+                                                                    onChange={handleInputChange}
+                                                                    tabIndex={-1}
+                                                                    autoComplete="off"
                                                                 />
                                                             </div>
                                                             <div className="flex-1">
@@ -363,11 +398,22 @@ const PaymentModal: React.FC<PaymentModalProps> = ({ isOpen, onClose, initialScr
                                                         </div>
                                                         <button
                                                             type="submit"
-                                                            className="w-full bg-violet-600 text-white rounded-md py-2 font-medium hover:bg-violet-700 transition-colors duration-200 shadow-md hover:shadow-lg flex items-center justify-center text-sm"
-                                                            disabled={submissionStatus === 'submitting'}
+                                                            className={`w-full text-white rounded-md py-2 font-medium transition-colors duration-200 shadow-md hover:shadow-lg flex items-center justify-center text-sm ${
+                                                                submissionStatus === 'submitting' || (isEmailRegistered && !isEmailChanged)
+                                                                    ? 'bg-violet-300 cursor-not-allowed'
+                                                                    : isEmailRegistered
+                                                                        ? 'bg-orange-500 hover:bg-orange-600'
+                                                                        : 'bg-violet-600 hover:bg-violet-700'
+                                                            }`}
+                                                            disabled={submissionStatus === 'submitting' || (isEmailRegistered && !isEmailChanged)}
                                                         >
                                                             {submissionStatus === 'submitting' ? (
-                                                                <LoadingDots/>
+                                                                <div className="flex items-center">
+                                                                    <span className="mr-2">Regisztráció hitelesítése</span>
+                                                                    <LoadingDots />
+                                                                </div>
+                                                            ) : isEmailRegistered && !isEmailChanged ? (
+                                                                'Ezzel az e-mailcímmel már regisztráltak.'
                                                             ) : submissionStatus === 'success' ? (
                                                                 'Sikeres regisztráció!'
                                                             ) : submissionStatus === 'error' ? (
@@ -377,7 +423,7 @@ const PaymentModal: React.FC<PaymentModalProps> = ({ isOpen, onClose, initialScr
                                                             )}
                                                         </button>
                                                     </form>
-                                                    {errorMessage && (
+                                                    {errorMessage && !(isEmailRegistered && !isEmailChanged) && (
                                                         <p className="text-red-500 text-xs mt-2">{errorMessage}</p>
                                                     )}
                                                     <p className="text-xs text-center text-gray-500">

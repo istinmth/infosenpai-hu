@@ -90,7 +90,7 @@ export default function InstructorsIntro(): JSX.Element {
             introduction: [
                 "Németh István Ákos vagyok, másodéves hallgató a Corvinus Egyetem gazdaságinformatika szakán. 2022-ben tettem emelt szintű informatikaérettségit, ezután pedig egy évig dolgoztam IT projektvezetőként. Jelenleg az egyetem mellett belső fejlesztésekkel és adatelemzéssel foglalkozom egy járműpiaci adatokkal kereskedő cégnél.",
                 "Részletesebben ismerem a C++, C#, Python, JavaScript/TypeScript nyelveket, sokat foglalkoztam adatbázisokkal, webfejlesztéssel és designnal is. Különösen érdekelnek a pénzügyi szektorhoz kapcsolódó informatikai megoldások, a gazdaság és a technológia kapcsolata, emellett kiskorom óta lenyűgöz a repülés és az ehhez, illetve a repülőtereken is megszokott biometrikus azonosító-rendszerekhez kapcsolódó, számomra elképesztő hatékonyságú technológia.",
-                "Az informatikaérettségi tematikája nem mindig arra fókuszál, ami később valóban lényeges lesz, illetve sokszor egyértelműen akarnak valamit a feladatok, amit órán nem tanítanak meg, én pedig pontosan ezeket a tippeket és trükköket szeretném megmutatni nektek, hogy egyetemre már felkészültebben mehessetek."
+                "Az informatikaérettségi tematikája a nemzeti alaptantervhez igazodik, a felsőoktatásban való sikeres helytálláshoz azonban többre lesz szükséged, ezért szeretnénk az előbbit meghaladni. Én olyan tippeket és trükköket mutatok neked, hogy az egyetemre már felkészülten érkezzél."
             ],
             imageSrc: "/IstvanProfil.jpg"
         }

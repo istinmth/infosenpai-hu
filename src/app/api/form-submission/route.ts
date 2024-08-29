@@ -29,7 +29,13 @@ export async function POST(request: Request) {
         const { lastName, firstName, email, tier, price } = body;
 
         if (!lastName || !firstName || !email || !tier || !price) {
-            return NextResponse.json({ message: 'Missing required fields', receivedData: body }, { status: 400 });
+            return NextResponse.json({ error: 'Missing required fields', receivedData: body }, { status: 400 });
+        }
+
+        // Check if email already exists
+        const existingUser = await collection.findOne({ email: email });
+        if (existingUser) {
+            return NextResponse.json({ error: 'Ez az email cím már regisztrálva van. Kérjük, használj másik email címet vagy lépj kapcsolatba velünk, ha segítségre van szükséged.' }, { status: 409 });
         }
 
         const result = await collection.insertOne({
@@ -49,17 +55,17 @@ export async function POST(request: Request) {
             console.log('Confirmation email sent successfully:', emailResult);
         } catch (emailError) {
             console.error('Error sending confirmation email:', emailError);
-            // Note: We're not returning here, as we want to return a success response even if the email fails
+            // We're still returning a success response, but logging the email error
         }
 
-        return NextResponse.json({ message: "Registration stored successfully", id: result.insertedId }, { status: 200 });
+        return NextResponse.json({ message: "Sikeres regisztráció!", id: result.insertedId }, { status: 200 });
     } catch (error: unknown) {
         console.error('Error processing registration:', error);
-        let errorMessage = 'An unknown error occurred';
+        let errorMessage = 'Váratlan hiba történt a regisztráció során. Kérjük, próbáld újra később vagy lépj kapcsolatba velünk.';
         let errorDetails = {};
 
         if (error instanceof MongoServerError) {
-            errorMessage = `MongoDB Error: ${error.message}`;
+            errorMessage = `Adatbázis hiba történt: ${error.message}`;
             errorDetails = {
                 code: error.code,
                 codeName: error.codeName,
@@ -72,7 +78,6 @@ export async function POST(request: Request) {
 
         console.error('Detailed error:', errorMessage, errorDetails);
         return NextResponse.json({
-            message: "Failed to process registration",
             error: errorMessage,
             details: errorDetails
         }, { status: 500 });
