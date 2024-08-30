@@ -64,7 +64,7 @@ export async function POST(request: Request) {
 
         // Send confirmation email
         const emailTemplate = price === 'Ingyenes' ? 'freeRegistration' : 'paidRegistration';
-        await sendConfirmationEmail(firstName, email, emailTemplate);
+        await sendConfirmationEmail(firstName, email,);
 
         return NextResponse.json({
             message: "Sikeres regisztráció!",
