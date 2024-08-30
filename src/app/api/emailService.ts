@@ -2,51 +2,29 @@ import { Resend } from 'resend';
 
 const resend = new Resend(process.env.RESEND_API_KEY);
 
-type EmailTemplate = 'freeRegistration' | 'paidRegistration' | 'paymentSuccess';
-
-export default async function sendConfirmationEmail(email: string, template: EmailTemplate, data?: { uniqueCode?: string }) {
+export default async function sendConfirmationEmail(firstName: string, email: string) {
     try {
-        let subject: string;
-        let htmlContent: string;
-
-        switch (template) {
-            case 'freeRegistration':
-                subject = 'Sikeres jelentkezés az InfoSenpai próbaalkalmára';
-                htmlContent = `
-          <h1>Köszönjük a jelentkezésed!</h1>
-          <p>Sikeresen regisztráltál az InfoSenpai próbaalkalmára. Hamarosan további információkat küldünk az eseményről.</p>
-        `;
-                break;
-            case 'paidRegistration':
-                subject = 'Sikeres regisztráció az InfoSenpai tanfolyamra';
-                htmlContent = `
-          <h1>Köszönjük a regisztrációdat!</h1>
-          <p>Sikeresen regisztráltál az InfoSenpai tanfolyamra. Kérjük, kövesd a fizetési folyamatot a regisztráció befejezéséhez.</p>
-        `;
-                break;
-            case 'paymentSuccess':
-                subject = 'Sikeres fizetés - InfoSenpai tanfolyam';
-                htmlContent = `
-          <h1>Köszönjük a vásárlást!</h1>
-          <p>A fizetésed sikeresen feldolgoztuk. Az egyedi kódod: <strong>${data?.uniqueCode}</strong></p>
-          <p>Kérjük, őrizd meg ezt a kódot, szükséged lesz rá a tanfolyamon való részvételhez.</p>
-        `;
-                break;
-            default:
-                throw new Error('Invalid email template');
-        }
-
-        const result = await resend.emails.send({
+        const data = await resend.emails.send({
             from: 'InfoSenpai <info@infosenpai.hu>',
             to: [email],
-            subject: subject,
-            html: htmlContent,
+            subject: 'Sikeres jelentkezés az InfoSenpai tanfolyamra',
+            html: `<p>Kedves ${firstName}!</p>
+
+<p>Rögzítettük a jelentkezésed a próbaalkalomra.</p>
+
+<p>Hamarosan egy új e-mailben értesítünk a pontos időpontról és helyszínről, sajnos ezt még mi sem tudjuk, azonban legkésőbb egy héttel az óra előtt jelentkezünk.</p>
+
+<p>Ha bármi kérdés felmerült benned az órákkal, a tananyaggal, az oktatóinkkal vagy a weboldallal kapcsolatban, keress minket bátran, az <a href="mailto:info@infosenpai.hu">info@infosenpai.hu</a> címen!</p>
+
+<p>Kellemes tanévkezdést kívánunk (ha van ilyen), hamarosan jelentkezünk!</p>
+
+<p>Üdvözlettel,<br>Az InfoSenpai csapata</p>`,
         });
 
-        console.log('Email sent successfully:', result);
-        return result;
+        console.log('Confirmation email sent successfully:', data);
+        return data;
     } catch (error) {
-        console.error('Error sending email:', error);
+        console.error('Error sending confirmation email:', error);
         throw error;
     }
 }

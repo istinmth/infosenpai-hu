@@ -8,22 +8,26 @@ import { Pricing } from "@/components/elements/pricing";
 import { Navbar } from "@/components/ui/navlinks"
 import { BentoGrid } from "@/components/ui/bento-grid";
 import AbelIntro from "@/components/elements/abelntro";
-import PaymentModal from "@/components/PaymentModal/PaymentModal";
-import { usePaymentModal } from "@/app/contexts/PaymentModalContext";
+import { useState } from 'react';
+import PaymentModal from "@/components/elements/paymentModal";
 
 export default function Home() {
-  const { isModalOpen, closeModal } = usePaymentModal();
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [initialModalScreen, setInitialModalScreen] = useState<'main' | 'registration'>('main');
+
+  const handleRegisterClick = () => {
+    setInitialModalScreen('registration');
+    setIsModalOpen(true);
+  };
 
   return (
       <div>
-        <Head>
-          <title>InfoSenpai - Informatikaérettségi-felkészítő</title>
-        </Head>
+        <Head> <title>Alma</title> </Head>
         <main>
-          <Navbar />
-          <BoxesGrid />
+          <Navbar/>
+          <BoxesGrid/>
           <section id="főcím">
-            <FlipWordsDemo />
+            <FlipWordsDemo onRegisterClick={handleRegisterClick}/>
           </section>
           <section id="témakörök">
             <p className="text-neutral-500 text-xl md:text-3xl max-w-xl mx-auto mb-10 text-center">
@@ -32,22 +36,25 @@ export default function Home() {
             </span>{" "}
               mi mindenről tanulhatsz nálunk!
             </p>
-            <BentoGrid />
+            <BentoGrid/>
           </section>
           <section id="rólunk">
             <div className="flex flex-col items-center md:flex-row md:justify-center">
-              <AbelIntro />
+              <AbelIntro/>
             </div>
           </section>
           <section id="miért mi?">
-            <AboutSection />
+            <AboutSection/>
           </section>
           <section id="jelentkezz!">
-            <Pricing />
+            <Pricing/>
           </section>
+            <section id="signup">
+            </section>
           <PaymentModal
               isOpen={isModalOpen}
-              onClose={closeModal}
+              onClose={() => setIsModalOpen(false)}
+              initialScreen={initialModalScreen}
           />
         </main>
       </div>

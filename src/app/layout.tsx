@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
 import GoogleAnalytics from '@/components/elements/GoogleAnalytics';
-import { PaymentModalProvider } from '@/app/contexts/PaymentModalContext';
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -36,11 +35,7 @@ export default function RootLayout({
         <head>
             <GoogleAnalytics />
         </head>
-        <body className={`${inter.className} bg-whitesmoke`}>
-        <PaymentModalProvider>
-            {children}
-        </PaymentModalProvider>
-        </body>
+        <body className={`${inter.className} bg-whitesmoke`}>{children}</body>
         </html>
     );
 }
