@@ -54,7 +54,7 @@ export async function POST(request: Request) {
 
         // Send confirmation email
         try {
-            const emailResult = await SendConfirmationEmail(firstName, email, template);
+            const emailResult = await SendConfirmationEmail(firstName, email,);
             console.log('Confirmation email sent successfully:', emailResult);
         } catch (emailError) {
             console.error('Error sending confirmation email:', emailError);
