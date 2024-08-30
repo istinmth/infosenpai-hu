@@ -1,8 +1,10 @@
 import React from "react";
 import { FlipWords } from "../ui/flip-words";
+import { usePaymentModal } from "@/app/contexts/PaymentModalContext"; // Updated import path
 
-export function FlipWordsDemo({ onRegisterClick }: { onRegisterClick: () => void }) {
+export function FlipWordsDemo() {
     const words = ["infóérettségi,", "egyetem,", "ECDL-vizsga"];
+    const { openModal } = usePaymentModal();
 
     const handleNezzukClick = () => {
         const temakorokSection = document.getElementById('témakörök');
@@ -10,10 +12,11 @@ export function FlipWordsDemo({ onRegisterClick }: { onRegisterClick: () => void
             temakorokSection.scrollIntoView({ behavior: 'smooth' });
         }
     };
-    const handleClick = () => {
-        const temakorokSection = document.getElementById('jelentkezz!');
-        if (temakorokSection) {
-            temakorokSection.scrollIntoView({ behavior: 'smooth' });
+
+    const handleJelentkezClick = () => {
+        const jelentkezzSection = document.getElementById('jelentkezz!');
+        if (jelentkezzSection) {
+            jelentkezzSection.scrollIntoView({ behavior: 'smooth' });
         }
     };
 
@@ -22,7 +25,7 @@ export function FlipWordsDemo({ onRegisterClick }: { onRegisterClick: () => void
             <div className="mb-6 sm:mb-6 flex justify-center w-full">
                 <div className="relative rounded-full px-3 py-1 text-sm leading-6 text-gray-600 ring-1 ring-gray-900/10 hover:ring-gray-900/20 text-center max-w-full">
                     <span className="">Regisztrálj most az ingyenes</span>{' '}
-                    <a href="#" className="font-semibold text-violet-600 whitespace-nowrap" onClick={onRegisterClick}>
+                    <a href="#" className="font-semibold text-violet-600 whitespace-nowrap" onClick={openModal}>
                         <span className="absolute inset-0" aria-hidden="true"/>
                         próbaalkalomra <span aria-hidden="true">&rarr;</span>
                     </a>
@@ -51,7 +54,7 @@ export function FlipWordsDemo({ onRegisterClick }: { onRegisterClick: () => void
                     <a
                         href="#"
                         className="rounded-md bg-black px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-gray-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-                        onClick={handleClick}
+                        onClick={openModal}
                     >
                         Jelentkezz
                     </a>
