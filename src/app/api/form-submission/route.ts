@@ -49,9 +49,12 @@ export async function POST(request: Request) {
 
         console.log('Registration stored successfully', result);
 
+        // Determine the email template based on the tier or some other logic
+        const template = tier === 'free' ? 'freeRegistration' : 'paidRegistration';
+
         // Send confirmation email
         try {
-            const emailResult = await SendConfirmationEmail(firstName, email);
+            const emailResult = await SendConfirmationEmail(firstName, email, template);
             console.log('Confirmation email sent successfully:', emailResult);
         } catch (emailError) {
             console.error('Error sending confirmation email:', emailError);
