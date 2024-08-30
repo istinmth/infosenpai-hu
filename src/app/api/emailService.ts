@@ -2,23 +2,23 @@ import { Resend } from 'resend';
 
 const resend = new Resend(process.env.RESEND_API_KEY);
 
-export default async function sendConfirmationEmail(firstName: string, email: string, template: 'freeRegistration' | 'paidRegistration') {
+export default async function sendConfirmationEmail(firstName: string, email: string) {
     try {
-        const subject = template === 'freeRegistration'
-            ? 'Sikeres jelentkezés az InfoSenpai próbaalkalmára'
-            : 'Sikeres regisztráció az InfoSenpai tanfolyamra';
-
-        const htmlContent = template === 'freeRegistration'
-            ? `<p>Kedves ${firstName}!</p>
-         <p>Rögzítettük a jelentkezésed a próbaalkalmunkra...</p>`
-            : `<p>Kedves ${firstName}!</p>
-         <p>Köszönjük a regisztrációdat az InfoSenpai tanfolyamra...</p>`;
-
         const data = await resend.emails.send({
             from: 'InfoSenpai <info@infosenpai.hu>',
             to: [email],
-            subject: subject,
-            html: htmlContent,
+            subject: 'Sikeres jelentkezés az InfoSenpai tanfolyamra',
+            html: `<p>Kedves ${firstName}!</p>
+
+<p>Rögzítettük a jelentkezésed a próbaalkalomra.</p>
+
+<p>Hamarosan egy új e-mailben értesítünk a pontos időpontról és helyszínről, sajnos ezt még mi sem tudjuk, azonban legkésőbb egy héttel az óra előtt jelentkezünk.</p>
+
+<p>Ha bármi kérdés felmerült benned az órákkal, a tananyaggal, az oktatóinkkal vagy a weboldallal kapcsolatban, keress minket bátran, az <a href="mailto:info@infosenpai.hu">info@infosenpai.hu</a> címen!</p>
+
+<p>Kellemes tanévkezdést kívánunk (ha van ilyen), hamarosan jelentkezünk!</p>
+
+<p>Üdvözlettel,<br>Az InfoSenpai csapata</p>`,
         });
 
         console.log('Confirmation email sent successfully:', data);

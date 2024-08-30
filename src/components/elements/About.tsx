@@ -70,7 +70,7 @@ export function AboutSection() {
                 online talált videókból, 10 éves feladatok megoldásaiból szedtük össze a felvételi pontjainkat. Ha úgy
                 érzed, kicsit üres kézzel futsz neki a felkészülésnek, egyet se félj!
               </p>
-              <p className="text-base font-semibold text-violet-600 mt-6">Úgy állítottuk össze a tananyagot, hogy kellően lefedje az érettségi és az ECDL vizsga tananyagát, de
+              <p className="text-base font-semibold text-violet-600 mt-6 text-justify">Úgy állítottuk össze a tananyagot, hogy kellően lefedje az érettségi és az ECDL vizsga tananyagát, de
                 túl is mutasson rajta, és megfelelő alapot adjon azoknak, akik esetleg ilyen irányban szeretnének
                 továbbtanulni.</p>
               <p className="mt-3">

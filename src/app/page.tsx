@@ -1,15 +1,16 @@
 "use client"
 
 import Head from 'next/head'
-import { FlipWordsDemo } from "@/components/elements/header";
-import { AboutSection } from "@/components/elements/about";
+import { FlipWordsDemo } from "@/components/elements/Header";
+import { AboutSection } from "@/components/elements/About";
 import { BoxesGrid } from "@/components/ui/boxes-grid";
-import { Pricing } from "@/components/elements/pricing";
+import { Pricing } from "@/components/elements/Pricing";
 import { Navbar } from "@/components/ui/navlinks"
 import { BentoGrid } from "@/components/ui/bento-grid";
-import AbelIntro from "@/components/elements/abelntro";
+import AbelIntro from "@/components/elements/Intro";
 import { useState } from 'react';
-import PaymentModal from "@/components/elements/paymentModal";
+import PaymentModal from "@/components/elements/PaymentModal";
+import {CardStackDemo} from "@/components/elements/CardStackRecommendedFor";
 
 export default function Home() {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -46,11 +47,14 @@ export default function Home() {
           <section id="miért mi?">
             <AboutSection/>
           </section>
+          <section id="kinek">
+            <CardStackDemo/>
+          </section>
           <section id="jelentkezz!">
             <Pricing/>
           </section>
-            <section id="signup">
-            </section>
+          <section id="signup">
+          </section>
           <PaymentModal
               isOpen={isModalOpen}
               onClose={() => setIsModalOpen(false)}

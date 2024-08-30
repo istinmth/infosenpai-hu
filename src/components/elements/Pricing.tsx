@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { CheckIcon } from '@heroicons/react/20/solid';
-import PaymentModal from "@/components/elements/paymentModal";
+import PaymentModal from "@/components/elements/PaymentModal";
 
 const includedFeatures = [
   '3 órás alkalmak szombatonként',
