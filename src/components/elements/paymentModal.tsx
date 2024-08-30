@@ -3,7 +3,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { XIcon, CheckIcon, ChevronDownIcon, ChevronUpIcon, ArrowLeftIcon } from 'lucide-react';
 import Link from 'next/link';
 import { loadStripe } from '@stripe/stripe-js';
-import { Elements, PaymentElement, AddressElement, useStripe, useElements } from '@stripe/react-stripe-js';
+import { Elements, PaymentElement, useStripe, useElements, AddressElement } from '@stripe/react-stripe-js';
 
 interface PaymentModalProps {
     isOpen: boolean;
@@ -57,7 +57,7 @@ const LoadingDots = () => (
     </div>
 );
 
-const StripePaymentForm: React.FC<{ amount: number, onSuccess: () => void }> = ({ amount, onSuccess }) => {
+const StripePaymentForm: React.FC<{ amount: number, onSuccess: (paymentIntentId: string) => void }> = ({ amount, onSuccess }) => {
     const stripe = useStripe();
     const elements = useElements();
     const [errorMessage, setErrorMessage] = useState<string | null>(null);
@@ -72,10 +72,17 @@ const StripePaymentForm: React.FC<{ amount: number, onSuccess: () => void }> = (
 
         setIsProcessing(true);
 
+        const { error: submitError } = await elements.submit();
+        if (submitError) {
+            setErrorMessage(submitError.message || 'Hiba történt a fizetési adatok elküldése során.');
+            setIsProcessing(false);
+            return;
+        }
+
         const { error, paymentIntent } = await stripe.confirmPayment({
             elements,
             confirmParams: {
-                return_url: window.location.href,
+                return_url: `${window.location.origin}/payment-confirmation`,
             },
             redirect: 'if_required',
         });
@@ -84,14 +91,14 @@ const StripePaymentForm: React.FC<{ amount: number, onSuccess: () => void }> = (
             setErrorMessage(error.message || 'Ismeretlen hiba történt');
             setIsProcessing(false);
         } else if (paymentIntent && paymentIntent.status === 'succeeded') {
-            onSuccess();
+            onSuccess(paymentIntent.id);
         } else if (paymentIntent && paymentIntent.status === 'requires_action') {
             if (paymentIntent.client_secret) {
                 const { error: confirmError } = await stripe.confirmCardPayment(paymentIntent.client_secret);
                 if (confirmError) {
                     setErrorMessage(`3DS hitelesítési hiba: ${confirmError.message}`);
                 } else {
-                    onSuccess();
+                    onSuccess(paymentIntent.id);
                 }
             } else {
                 setErrorMessage('Hiba történt a fizetés során: hiányzó client_secret');
@@ -104,7 +111,15 @@ const StripePaymentForm: React.FC<{ amount: number, onSuccess: () => void }> = (
 
     return (
         <form onSubmit={handleSubmit}>
-            <PaymentElement />
+            <PaymentElement
+                options={{
+                    layout: 'tabs',
+                    wallets: {
+                        applePay: 'auto',
+                        googlePay: 'auto'
+                    }
+                }}
+            />
             <button
                 type="submit"
                 disabled={!stripe || isProcessing}
@@ -158,6 +173,7 @@ const PaymentModal: React.FC<PaymentModalProps> = ({ isOpen, onClose, initialScr
     const [submissionStatus, setSubmissionStatus] = useState<SubmissionStatus>('idle');
     const [errorMessage, setErrorMessage] = useState<string | null>(null);
     const [honeypot, setHoneypot] = useState('');
+    const [uniqueCode, setUniqueCode] = useState<string | null>(null);
     const [formData, setFormData] = useState({
         lastName: '',
         firstName: '',
@@ -282,8 +298,16 @@ const PaymentModal: React.FC<PaymentModalProps> = ({ isOpen, onClose, initialScr
         setErrorMessage(null);
         setIsEmailRegistered(false);
         setIsEmailChanged(false);
+
+        if (honeypot) {
+            console.log('Bot submission detected');
+            setSubmissionStatus('error');
+            setErrorMessage('Huncut kis robot vagy! 🤖');
+            return;
+        }
+
         try {
-            const response = await fetch('/api/form-submission', {
+            const response = await fetch('/api/register', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -305,20 +329,26 @@ const PaymentModal: React.FC<PaymentModalProps> = ({ isOpen, onClose, initialScr
                 }
                 return;
             }
-            if (honeypot) {
-                console.log('Bot submission detected');
-                setSubmissionStatus('error');
-                setErrorMessage('Huncut kis robot vagy! 🤖');
-                return;
-            }
 
-            console.log('Form submitted successfully:', data);
+            console.log('Registration submitted successfully:', data);
             setSubmissionStatus('success');
-            setTimeout(() => {
-                setCurrentScreen('thankyou');
-            }, 1000);
+
+            if (selectedTier === 0) {
+                // Free registration
+                setTimeout(() => {
+                    setCurrentScreen('thankyou');
+                }, 1000);
+            } else {
+                // Paid registration
+                if (data.clientSecret) {
+                    setClientSecret(data.clientSecret);
+                    setCurrentScreen('payment');
+                } else {
+                    setErrorMessage('Hiba történt a fizetési folyamat elindításakor. Kérjük, próbáld újra később.');
+                }
+            }
         } catch (error: unknown) {
-            console.error('Error submitting form:', error);
+            console.error('Error submitting registration:', error);
             setSubmissionStatus('error');
             setErrorMessage('Hiba történt a kapcsolat során. Kérjük, ellenőrizd az internetkapcsolatod és próbáld újra.');
         }
