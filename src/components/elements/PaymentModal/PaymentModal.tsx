@@ -215,7 +215,7 @@ const PaymentModal: React.FC<PaymentModalProps> = ({ isOpen, onClose, initialScr
                         animate={{ scale: 1, opacity: 1 }}
                         exit={{ scale: 0.9, opacity: 0 }}
                         transition={{ duration: 0.3 }}
-                        className="bg-white rounded-lg shadow-xl w-full max-w-5xl h-[85vh] overflow-hidden flex flex-col"
+                        className="bg-white rounded-lg shadow-xl w-full max-w-5xl h-[92vh] md:h-[80vh] overflow-hidden flex flex-col"
                     >
                         <div className="p-4 md:p-6 flex-grow overflow-y-auto">
                             <div className="flex justify-between items-center mb-4 md:mb-6">
@@ -250,7 +250,7 @@ const PaymentModal: React.FC<PaymentModalProps> = ({ isOpen, onClose, initialScr
                                             animate="visible"
                                             exit="exit"
                                             transition={{duration: 0.2}}
-                                            className="space-y-6"
+                                            className="space-y-6 flex flex-col items-left justify-center"
                                         >
                                             <h2 className="text-xl md:text-2xl font-bold">Mennyi órára szeretnél
                                                 jönni?</h2>

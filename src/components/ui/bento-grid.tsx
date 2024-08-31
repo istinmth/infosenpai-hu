@@ -72,7 +72,7 @@ const Feature = ({
   return (
       <div
           className={cn(
-              "flex flex-col py-6 px-4 lg:py-8 lg:px-6 relative group/feature bg-whitesmoke dark:bg-whitesmoke rounded-lg transition-all duration-200"
+              "flex flex-col py-6 px-4 lg:py-8 lg:px-6 relative group/feature bg-whitesmoke dark:bg-whitesmoke rounded-lg transition-all duration-200 mr-12 ml-12"
           )}
       >
         <div className="opacity-0 group-hover/feature:opacity-100 transition duration-200 absolute inset-0 h-full w-full pointer-events-none rounded-lg" />

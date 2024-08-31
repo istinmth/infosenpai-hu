@@ -34,7 +34,7 @@ const InstructorSection: React.FC<InstructorSectionProps> = ({ name, introductio
 
     return (
         <div className="flex flex-col md:flex-row items-center md:items-start gap-8 mb-16">
-            <div className="w-48 h-48 md:w-64 md:h-64 relative overflow-hidden rounded-full shadow-lg">
+            <div className="w-50 h-50 md:w-64 md:h-64 relative overflow-hidden rounded-full shadow-lg">
                 <Image
                     src={imageSrc}
                     alt={name}
@@ -97,8 +97,8 @@ export default function InstructorsIntro(): JSX.Element {
     ];
 
     return (
-        <section className="bg-whitesmoke py-16 px-4 md:px-8 max-w-4xl mx-auto">
-            <h2 className="text-3xl md:text-4xl font-bold mb-12 text-black text-center">Ismerd meg az oktatóinkat</h2>
+        <section className="bg-whitesmoke py-16 px-4 md:px-8 max-w-4xl">
+            <h2 className="text-3xl md:text-4xl font-bold mb-12 text-violet-600 text-left">Ismerd meg az oktatóinkat</h2>
             <InstructorSection
                 {...instructors[0]}
                 isExpanded={isExpandedAbel}

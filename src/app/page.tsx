@@ -10,7 +10,7 @@ import { BentoGrid } from "@/components/ui/bento-grid";
 import AbelIntro from "@/components/elements/Intro";
 import { useState } from 'react';
 import PaymentModal from "@/components/elements/PaymentModal/PaymentModal";
-import {CardStackDemo} from "@/components/elements/CardStackRecommendedFor";
+import RecommendedFor from "@/components/elements/RecommendedFor";
 
 export default function Home() {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -31,8 +31,8 @@ export default function Home() {
             <FlipWordsDemo onRegisterClick={handleRegisterClick}/>
           </section>
           <section id="témakörök">
-            <p className="text-neutral-500 text-xl md:text-3xl max-w-xl mx-auto mb-10 text-center">
-            <span className="font-bold text-violet-600">
+            <p className="text-neutral-500 text-2xl md:text-5xl max-w-xl mx-auto mb-10 text-center">
+            <span className="font-bold text-violet-600 text-left">
               Olvasd el,
             </span>{" "}
               mi mindenről tanulhatsz nálunk!
@@ -48,7 +48,7 @@ export default function Home() {
             <AboutSection/>
           </section>
           <section id="kinek">
-            <CardStackDemo/>
+            <RecommendedFor/>
           </section>
           <section id="jelentkezz!">
             <Pricing/>
