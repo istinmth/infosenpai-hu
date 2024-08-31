@@ -78,8 +78,7 @@ const PaymentModal: React.FC<PaymentModalProps> = ({ isOpen, onClose, initialScr
         if (index === 0) {
             setCurrentScreen('registration');
         } else {
-            // Instead of going to billing, show a message
-            alert('A fizetős opciók a próbaalkalom után lesznek elérhetőek. Kérjük, regisztrálj az ingyenes alkalomra!');
+            setCurrentScreen('billing');
         }
     };
 
@@ -301,19 +300,29 @@ const PaymentModal: React.FC<PaymentModalProps> = ({ isOpen, onClose, initialScr
                                                                 className={`w-full rounded-md py-2 text-sm md:text-base font-medium transition-colors duration-200 ${
                                                                     index === 0
                                                                         ? 'bg-violet-600 text-white hover:bg-violet-500'
-                                                                        : 'bg-gray-300 text-gray-600 cursor-not-allowed'
+                                                                        : 'bg-black text-white hover:bg-gray-600'
                                                                 }`}
                                                                 onClick={() => handleOptionSelect(index)}
-                                                                disabled={index !== 0}
                                                             >
-                                                                {index === 0 ? 'Regisztrálok' : 'Hamarosan elérhető'}
+                                                                {index === 0 ? 'Regisztrálok' : 'Megveszem'}
                                                             </button>
 
-                                                            {index !== 0 && (
-                                                                <p className="mt-2 text-xs text-gray-500 text-center">
-                                                                    Ez az opció a próbaalkalom után lesz elérhető
-                                                                </p>
-                                                            )}
+                                                            <button
+                                                                className="mt-2 w-full text-gray-500 flex items-center justify-center md:hidden"
+                                                                onClick={() => handleTierClick(index)}
+                                                            >
+                                                                {expandedTier === index ? (
+                                                                    <>
+                                                                        Kevesebb <ChevronUpIcon className="ml-1"
+                                                                                                size={16}/>
+                                                                    </>
+                                                                ) : (
+                                                                    <>
+                                                                        Több <ChevronDownIcon className="ml-1"
+                                                                                              size={16}/>
+                                                                    </>
+                                                                )}
+                                                            </button>
                                                         </div>
                                                     </motion.div>
                                                 ))}
@@ -516,6 +525,12 @@ const PaymentModal: React.FC<PaymentModalProps> = ({ isOpen, onClose, initialScr
                                     )}
                                 </AnimatePresence>
                             </div>
+
+                            {currentScreen === 'main' && (
+                                <div className="mt-4 md:mt-8 text-center text-xs md:text-sm text-violet-600">
+                                    Természetesen ha több alkalmat vásárolsz, akkor is ingyen van az első!
+                                </div>
+                            )}
                         </div>
                     </motion.div>
                 </motion.div>
