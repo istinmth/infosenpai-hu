@@ -1,14 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { XIcon, CheckIcon, ChevronDownIcon, ChevronUpIcon, ArrowLeftIcon } from 'lucide-react';
-import Link from 'next/link';
 import { loadStripe } from '@stripe/stripe-js';
 import { Elements } from '@stripe/react-stripe-js';
 import { ProgressIndicator } from './ProgressIndicator';
-import { LoadingDots } from './LoadingDots';
 import { StripePaymentForm } from './StripePaymentForm';
 import { BillingForm } from './BillingForm';
 import { pricingTiers } from './PricingTiers';
+import { StudentRegistrationForm } from './StudentRegistrationForm';
 
 interface PaymentModalProps {
     isOpen: boolean;
@@ -38,13 +37,6 @@ const PaymentModal: React.FC<PaymentModalProps> = ({ isOpen, onClose, initialScr
     const [selectedTier, setSelectedTier] = useState<number>(0);
     const [submissionStatus, setSubmissionStatus] = useState<SubmissionStatus>('idle');
     const [errorMessage, setErrorMessage] = useState<string | null>(null);
-    const [honeypot, setHoneypot] = useState('');
-    const [uniqueCode, setUniqueCode] = useState<string | null>(null);
-    const [formData, setFormData] = useState({
-        lastName: '',
-        firstName: '',
-        email: ''
-    });
     const [isEmailRegistered, setIsEmailRegistered] = useState(false);
     const [isEmailChanged, setIsEmailChanged] = useState(false);
     const [clientSecret, setClientSecret] = useState<string | null>(null);
@@ -94,25 +86,6 @@ const PaymentModal: React.FC<PaymentModalProps> = ({ isOpen, onClose, initialScr
         setErrorMessage(null);
     };
 
-    const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        const { name, value } = e.target;
-        setFormData(prevData => ({
-            ...prevData,
-            [name]: value
-        }));
-
-        if (name === 'email') {
-            setIsEmailChanged(true);
-            setIsEmailRegistered(false);
-            setSubmissionStatus('idle');
-            setErrorMessage(null);
-        }
-        if (name === 'honeypot') {
-            setHoneypot(value);
-            return;
-        }
-    };
-
     const handlePaymentSuccess = () => {
         setCurrentScreen('thankyou');
     };
@@ -122,19 +95,11 @@ const PaymentModal: React.FC<PaymentModalProps> = ({ isOpen, onClose, initialScr
         setCurrentScreen('payment');
     };
 
-    const handleRegistrationSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-        e.preventDefault();
+    const handleRegistrationSubmit = async (formData: any) => {
         setSubmissionStatus('submitting');
         setErrorMessage(null);
         setIsEmailRegistered(false);
         setIsEmailChanged(false);
-
-        if (honeypot) {
-            console.log('Bot submission detected');
-            setSubmissionStatus('error');
-            setErrorMessage('Huncut kis robot vagy! 🤖');
-            return;
-        }
 
         try {
             const response = await fetch('/api/register', {
@@ -152,12 +117,7 @@ const PaymentModal: React.FC<PaymentModalProps> = ({ isOpen, onClose, initialScr
             const data = await response.json();
 
             if (!response.ok) {
-                setSubmissionStatus('error');
-                setErrorMessage(data.error || 'Váratlan hiba történt. Kérjük, próbáld újra később.');
-                if (response.status === 409) {
-                    setIsEmailRegistered(true);
-                }
-                return;
+                throw new Error(data.error || 'Váratlan hiba történt. Kérjük, próbáld újra később.');
             }
 
             console.log('Registration submitted successfully:', data);
@@ -174,13 +134,16 @@ const PaymentModal: React.FC<PaymentModalProps> = ({ isOpen, onClose, initialScr
                     setClientSecret(data.clientSecret);
                     setCurrentScreen('payment');
                 } else {
-                    setErrorMessage('Hiba történt a fizetési folyamat elindításakor. Kérjük, próbáld újra később.');
+                    throw new Error('Hiba történt a fizetési folyamat elindításakor. Kérjük, próbáld újra később.');
                 }
             }
-        } catch (error: unknown) {
+        } catch (error: any) {
             console.error('Error submitting registration:', error);
             setSubmissionStatus('error');
-            setErrorMessage('Hiba történt a kapcsolat során. Kérjük, ellenőrizd az internetkapcsolatod és próbáld újra.');
+            setErrorMessage(error.message);
+            if (error.status === 409) {
+                setIsEmailRegistered(true);
+            }
         }
     };
 
@@ -342,104 +305,8 @@ const PaymentModal: React.FC<PaymentModalProps> = ({ isOpen, onClose, initialScr
                                         >
                                             <div className="flex flex-col items-center justify-center mt-20">
                                                 <div className="space-y-6 w-full max-w-md">
-                                                    <h2 className="text-lg md:text-2xl font-bold text-violet-600">Regisztráció
-                                                        a próbaalkalomra</h2>
-                                                    <form onSubmit={handleRegistrationSubmit} className="space-y-4">
-                                                        <div className="flex space-x-4">
-                                                            <div className="flex-1">
-                                                                <label htmlFor="lastName"
-                                                                       className="block text-sm font-medium text-gray-700 mb-1">Vezetéknév</label>
-                                                                <input
-                                                                    type="text"
-                                                                    id="lastName"
-                                                                    name="lastName"
-                                                                    value={formData.lastName}
-                                                                    onChange={handleInputChange}
-                                                                    className="w-full px-3 py-2 bg-gray-50 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-violet-500 focus:border-transparent text-sm"
-                                                                    placeholder="Kovács"
-                                                                    required
-                                                                />
-                                                            </div>
-                                                            <div style={{display: 'none'}}>
-                                                                <label htmlFor="honeypot">Leave this field empty</label>
-                                                                <input
-                                                                    type="text"
-                                                                    id="honeypot"
-                                                                    name="honeypot"
-                                                                    value={honeypot}
-                                                                    onChange={handleInputChange}
-                                                                    tabIndex={-1}
-                                                                    autoComplete="off"
-                                                                />
-                                                            </div>
-                                                            <div className="flex-1">
-                                                                <label htmlFor="firstName"
-                                                                       className="block text-sm font-medium text-gray-700 mb-1">Keresztnév</label>
-                                                                <input
-                                                                    type="text"
-                                                                    id="firstName"
-                                                                    name="firstName"
-                                                                    value={formData.firstName}
-                                                                    onChange={handleInputChange}
-                                                                    className="w-full px-3 py-2 bg-gray-50 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-violet-500 focus:border-transparent text-sm"
-                                                                    placeholder="János"
-                                                                    required
-                                                                />
-                                                            </div>
-                                                        </div>
-                                                        <div>
-                                                            <label htmlFor="email"
-                                                                   className="block text-sm font-medium text-gray-700 mb-1">E-mail
-                                                                cím</label>
-                                                            <input
-                                                                type="email"
-                                                                id="email"
-                                                                name="email"
-                                                                value={formData.email}
-                                                                onChange={handleInputChange}
-                                                                className="w-full px-3 py-2 bg-gray-50 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-violet-500 focus:border-transparent text-sm"
-                                                                placeholder="pelda@email.com"
-                                                                required
-                                                            />
-                                                        </div>
-                                                        <button
-                                                            type="submit"
-                                                            className={`w-full text-white rounded-md py-2 font-medium transition-colors duration-200 shadow-md hover:shadow-lg flex items-center justify-center text-sm ${
-                                                                submissionStatus === 'submitting' || (isEmailRegistered && !isEmailChanged)
-                                                                    ? 'bg-violet-300 cursor-not-allowed'
-                                                                    : isEmailRegistered
-                                                                        ? 'bg-orange-500 hover:bg-orange-600'
-                                                                        : 'bg-violet-600 hover:bg-violet-700'
-                                                            }`}
-                                                            disabled={submissionStatus === 'submitting' || (isEmailRegistered && !isEmailChanged)}
-                                                        >
-                                                            {submissionStatus === 'submitting' ? (
-                                                                <div className="flex items-center">
-                                                                    <span className="mr-2">Regisztráció hitelesítése</span>
-                                                                    <LoadingDots />
-                                                                </div>
-                                                            ) : isEmailRegistered && !isEmailChanged ? (
-                                                                'Ezzel az e-mailcímmel már regisztráltak.'
-                                                            ) : submissionStatus === 'success' ? (
-                                                                'Sikeres regisztráció!'
-                                                            ) : submissionStatus === 'error' ? (
-                                                                'Hiba történt. Próbáld újra.'
-                                                            ) : (
-                                                                'Regisztrálok'
-                                                            )}
-                                                        </button>
-                                                    </form>
-                                                    {errorMessage && !(isEmailRegistered && !isEmailChanged) && (
-                                                        <p className="text-red-500 text-xs mt-2">{errorMessage}</p>
-                                                    )}
-                                                    <p className="text-xs text-center text-gray-500">
-                                                        A regisztrációval elfogadod az{' '}
-                                                        <Link href="/compliance"
-                                                              className="text-violet-600 hover:underline">
-                                                            adatkezelési tájékoztatónkat
-                                                        </Link>
-                                                        .
-                                                    </p>
+                                                    <h2 className="text-lg md:text-2xl font-bold text-violet-600">Regisztráció a próbaalkalomra</h2>
+                                                    <StudentRegistrationForm onSubmit={handleRegistrationSubmit} />
                                                 </div>
                                             </div>
                                         </motion.div>
@@ -498,6 +365,7 @@ const PaymentModal: React.FC<PaymentModalProps> = ({ isOpen, onClose, initialScr
                                             </div>
                                         </motion.div>
                                     )}
+
                                     {currentScreen === 'thankyou' && (
                                         <motion.div
                                             key="thankyou"
