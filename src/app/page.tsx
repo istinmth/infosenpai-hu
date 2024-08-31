@@ -9,7 +9,7 @@ import { Navbar } from "@/components/ui/navlinks"
 import { BentoGrid } from "@/components/ui/bento-grid";
 import AbelIntro from "@/components/elements/Intro";
 import { useState } from 'react';
-import PaymentModal from "@/components/elements/PaymentModal";
+import PaymentModal from "@/components/elements/PaymentModal/PaymentModal";
 import {CardStackDemo} from "@/components/elements/CardStackRecommendedFor";
 
 export default function Home() {

@@ -3,7 +3,12 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { XIcon, CheckIcon, ChevronDownIcon, ChevronUpIcon, ArrowLeftIcon } from 'lucide-react';
 import Link from 'next/link';
 import { loadStripe } from '@stripe/stripe-js';
-import { Elements, PaymentElement, useStripe, useElements, AddressElement } from '@stripe/react-stripe-js';
+import { Elements } from '@stripe/react-stripe-js';
+import { ProgressIndicator } from './ProgressIndicator';
+import { LoadingDots } from './LoadingDots';
+import { StripePaymentForm } from './StripePaymentForm';
+import { BillingForm } from './BillingForm';
+import { pricingTiers } from './PricingTiers';
 
 interface PaymentModalProps {
     isOpen: boolean;
@@ -27,145 +32,6 @@ interface BillingDetails {
 
 const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY!);
 
-const ProgressIndicator: React.FC<{ currentStep: number }> = ({ currentStep }) => {
-    return (
-        <div className="flex items-center justify-center space-x-2">
-            <div className={`w-3 h-3 rounded-full ${currentStep === 1 ? 'bg-violet-600' : 'bg-gray-300'}`} />
-            <div className={`w-3 h-3 rounded-full ${currentStep === 2 ? 'bg-violet-600' : 'bg-gray-300'}`} />
-            <div className={`w-3 h-3 rounded-full ${currentStep === 3 ? 'bg-violet-600' : 'bg-gray-300'}`} />
-        </div>
-    );
-};
-
-const LoadingDots = () => (
-    <div className="flex space-x-1">
-        <motion.div
-            className="w-2 h-2 bg-white rounded-full"
-            animate={{ y: ["0%", "-50%", "0%"] }}
-            transition={{ duration: 0.6, repeat: Infinity, ease: "easeInOut" }}
-        />
-        <motion.div
-            className="w-2 h-2 bg-white rounded-full"
-            animate={{ y: ["0%", "-50%", "0%"] }}
-            transition={{ duration: 0.6, repeat: Infinity, ease: "easeInOut", delay: 0.2 }}
-        />
-        <motion.div
-            className="w-2 h-2 bg-white rounded-full"
-            animate={{ y: ["0%", "-50%", "0%"] }}
-            transition={{ duration: 0.6, repeat: Infinity, ease: "easeInOut", delay: 0.4 }}
-        />
-    </div>
-);
-
-const StripePaymentForm: React.FC<{ amount: number, onSuccess: (paymentIntentId: string) => void }> = ({ amount, onSuccess }) => {
-    const stripe = useStripe();
-    const elements = useElements();
-    const [errorMessage, setErrorMessage] = useState<string | null>(null);
-    const [isProcessing, setIsProcessing] = useState(false);
-
-    const handleSubmit = async (event: React.FormEvent) => {
-        event.preventDefault();
-
-        if (!stripe || !elements) {
-            return;
-        }
-
-        setIsProcessing(true);
-
-        const { error: submitError } = await elements.submit();
-        if (submitError) {
-            setErrorMessage(submitError.message || 'Hiba történt a fizetési adatok elküldése során.');
-            setIsProcessing(false);
-            return;
-        }
-
-        const { error, paymentIntent } = await stripe.confirmPayment({
-            elements,
-            confirmParams: {
-                return_url: `${window.location.origin}/payment-confirmation`,
-            },
-            redirect: 'if_required',
-        });
-
-        if (error) {
-            setErrorMessage(error.message || 'Ismeretlen hiba történt');
-            setIsProcessing(false);
-        } else if (paymentIntent && paymentIntent.status === 'succeeded') {
-            onSuccess(paymentIntent.id);
-        } else if (paymentIntent && paymentIntent.status === 'requires_action') {
-            if (paymentIntent.client_secret) {
-                const { error: confirmError } = await stripe.confirmCardPayment(paymentIntent.client_secret);
-                if (confirmError) {
-                    setErrorMessage(`3DS hitelesítési hiba: ${confirmError.message}`);
-                } else {
-                    onSuccess(paymentIntent.id);
-                }
-            } else {
-                setErrorMessage('Hiba történt a fizetés során: hiányzó client_secret');
-            }
-        } else {
-            setErrorMessage('Váratlan hiba történt.');
-        }
-        setIsProcessing(false);
-    };
-
-    return (
-        <form onSubmit={handleSubmit}>
-            <PaymentElement
-                options={{
-                    layout: 'tabs',
-                    wallets: {
-                        applePay: 'auto',
-                        googlePay: 'auto'
-                    }
-                }}
-            />
-            <button
-                type="submit"
-                disabled={!stripe || isProcessing}
-                className="mt-4 w-full bg-violet-600 text-white rounded-md py-2 font-medium transition-colors duration-200 hover:bg-violet-700 disabled:bg-gray-400"
-            >
-                {isProcessing ? 'Egy pillanat...' : `Fizetek ${amount} Ft-ot`}
-            </button>
-            {errorMessage && <div className="mt-4 text-red-500">{errorMessage}</div>}
-        </form>
-    );
-};
-
-const BillingForm: React.FC<{ onSubmit: () => void }> = ({ onSubmit }) => {
-    const stripe = useStripe();
-    const elements = useElements();
-
-    const handleSubmit = async (event: React.FormEvent) => {
-        event.preventDefault();
-        if (!stripe || !elements) {
-            return;
-        }
-        onSubmit();
-    };
-
-    return (
-        <form onSubmit={handleSubmit} className="space-y-4">
-            <AddressElement
-                options={{
-                    mode: 'billing',
-                    defaultValues: {
-                        address: {
-                            country: 'HU',
-                        },
-                    },
-                }}
-            />
-            <button
-                type="submit"
-                className="w-full bg-violet-600 text-white rounded-md py-2 font-medium transition-colors duration-200 hover:bg-violet-700"
-            >
-                Tovább a fizetéshez
-            </button>
-        </form>
-    );
-};
-
 const PaymentModal: React.FC<PaymentModalProps> = ({ isOpen, onClose, initialScreen = 'main' }) => {
     const [expandedTier, setExpandedTier] = useState<number | null>(null);
     const [currentScreen, setCurrentScreen] = useState<ScreenType>(initialScreen);
@@ -183,42 +49,6 @@ const PaymentModal: React.FC<PaymentModalProps> = ({ isOpen, onClose, initialScr
     const [isEmailChanged, setIsEmailChanged] = useState(false);
     const [clientSecret, setClientSecret] = useState<string | null>(null);
     const [billingDetails, setBillingDetails] = useState<BillingDetails | null>(null);
-
-    const pricingTiers = [
-        {
-            title: 'Az első alkalom',
-            price: 'Ingyenes',
-            description: 'Regisztrálj, és találkozzunk október 5-én a Budapesti Corvinus Egyetemen!',
-            features: [
-                '3 órás alkalom',
-                'Bevezetés az érettségi témakörökbe',
-                'Ismerekedés, érdekességek',
-                'Kérdések és válaszok'
-            ]
-        },
-        {
-            title: '4 Alkalom',
-            price: '26500',
-            description: 'Ideális egy témakörhöz',
-            features: [
-                '4 x 3 órás alkalom',
-                'A tananyag egy témaköre',
-                'Gyakorlati feladatok, házik',
-                'Személyre szabott visszajelzés'
-            ]
-        },
-        {
-            title: '20 Alkalom',
-            price: '125000',
-            description: 'Teljes érettségi felkészítő csomag',
-            features: [
-                '20 x 3 órás alkalom',
-                'Teljes érettségi anyag lefedése',
-                'Próbaérettségi',
-                'Egyéni konzultációk',
-            ]
-        }
-    ];
 
     useEffect(() => {
         if (isOpen) {
@@ -353,9 +183,11 @@ const PaymentModal: React.FC<PaymentModalProps> = ({ isOpen, onClose, initialScr
             setErrorMessage('Hiba történt a kapcsolat során. Kérjük, ellenőrizd az internetkapcsolatod és próbáld újra.');
         }
     };
+
     const handleBillingSubmit = () => {
         setCurrentScreen('payment');
     };
+
     const fadeVariants = {
         hidden: { opacity: 0 },
         visible: { opacity: 1 },
