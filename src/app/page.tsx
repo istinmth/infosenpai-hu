@@ -31,10 +31,11 @@ export default function Home() {
             <FlipWordsDemo onRegisterClick={handleRegisterClick}/>
           </section>
           <section id="témakörök">
-            <p className="text-neutral-500 text-2xl md:text-5xl max-w-xl mx-auto mb-10 text-center">
-            <span className="font-bold text-violet-600 text-left">
+            <p className="text-neutral-500 text-2xl md:text-5xl max-w-7xl mx-auto mb-10 text-left ml-12">
+            <span className="font-bold text-violet-600">
               Olvasd el,
             </span>{" "}
+              <br/>
               mi mindenről tanulhatsz nálunk!
             </p>
             <BentoGrid/>

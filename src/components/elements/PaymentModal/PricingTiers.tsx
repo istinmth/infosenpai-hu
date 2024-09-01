@@ -1,6 +1,6 @@
 export const pricingTiers = [
     {
-        title: 'Az első alkalom',
+        title: 'A próbaalkalom',
         price: 'Ingyenes',
         description: 'Regisztrálj, és találkozzunk október 5-én a Budapesti Corvinus Egyetemen!',
         features: [

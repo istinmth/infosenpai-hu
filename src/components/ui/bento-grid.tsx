@@ -50,7 +50,7 @@ export function BentoGrid() {
   ];
   return (
       <div className="flex justify-center w-full py-10 px-4 lg:px-0">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 lg:gap-8 relative z-10 max-w-5xl w-full">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 lg:gap-8 relative z-10 max-w-6xl w-full">
           {features.map((feature, index) => (
               <Feature key={feature.title} {...feature} index={index} />
           ))}
@@ -72,7 +72,7 @@ const Feature = ({
   return (
       <div
           className={cn(
-              "flex flex-col py-6 px-4 lg:py-8 lg:px-6 relative group/feature bg-whitesmoke dark:bg-whitesmoke rounded-lg transition-all duration-200 mr-12 ml-12"
+              "flex flex-col py-6 px-4 lg:py-8 lg:px-6 relative group/feature bg-whitesmoke dark:bg-whitesmoke rounded-lg transition-all duration-200 md:ml-9"
           )}
       >
         <div className="opacity-0 group-hover/feature:opacity-100 transition duration-200 absolute inset-0 h-full w-full pointer-events-none rounded-lg" />
