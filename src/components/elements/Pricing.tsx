@@ -16,10 +16,10 @@ export function Pricing() {
       <div className="bg-whitesmoke py-2">
         <div className="mx-auto max-w-7xl px-6 lg:px-8">
           <div className="mx-auto max-w-2xl sm:text-center">
-            <h2 className="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">Gyere el, próbáld ki, az első alkalom ingyenes, nincs veszíteni valód.</h2>
+            <h2 className="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">Gyere el, próbáld ki, az első alkalom <span className={"text-amber-500"}>ingyenes. </span>Nincs veszítenivalód!</h2>
             <p className="mt-6 text-lg leading-8 text-gray-600">
               Ha pedig megtetszik, és végig
-              velünk tanulsz akkor az érettségi is olyan lesz, mint egy laza óra nálunk
+              velünk tanulsz, akkor az érettségi is olyan lesz, mint egy laza óra nálunk.
             </p>
           </div>
           <div className="mx-auto mt-6 max-w-2xl rounded-3xl ring-1 ring-gray-300 sm:mt-20 lg:mx-0 lg:flex lg:max-w-none">
@@ -61,7 +61,7 @@ export function Pricing() {
                   </button>
                   <p className="mt-6 text-xs leading-5 text-gray-600">
                     Jelenleg csak az október 5-i próbaalkalomra lehet jelentkezni. <br/> <span
-                      className="text-violet-600">A teljes kurzus a próbaalkalmon kívül 20 alkalom hosszúságú.</span>
+                      className="text-violet-600">A teljes kurzus a próbaalkalmon kívül 20 alkalomból áll.</span>
                   </p>
                 </div>
               </div>

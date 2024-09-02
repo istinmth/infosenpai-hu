@@ -64,10 +64,10 @@ export function AboutSection() {
                 gyakorlatod a dologban!</h2>
               <p className="mt-8 text-justify">
                 Magyarországon az informatikaórák száma legjobb esetben is nagyon kevés, és a különböző képességű diákok
-                keveredése itt talán még nagyobb hátrány, mint
+                együtt oktatása itt talán még nagyobb hátrány, mint
                 sok másik tantárgy esetében. Fakultációra természetesen tanárhiány miatt nem volt lehetőség a mi
                 iskolánkban, így magunktól,
-                online talált videókból, 10 éves feladatok megoldásaiból szedtük össze a felvételi pontjainkat. Ha úgy
+                online talált videókból, régi feladatok gyakorlásával szedtük össze a felvételi pontjainkat. Ha úgy
                 érzed, kicsit üres kézzel futsz neki a felkészülésnek, egyet se félj!
               </p>
               <p className="text-base font-semibold text-violet-600 mt-6 text-justify">Úgy állítottuk össze a tananyagot, hogy kellően lefedje az érettségi és az ECDL vizsga tananyagát, de

@@ -11,6 +11,7 @@ import AbelIntro from "@/components/elements/Intro";
 import { useState } from 'react';
 import PaymentModal from "@/components/elements/PaymentModal/PaymentModal";
 import RecommendedFor from "@/components/elements/RecommendedFor";
+import Footer from "@/components/elements/Footer";
 
 export default function Home() {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -31,7 +32,7 @@ export default function Home() {
             <FlipWordsDemo onRegisterClick={handleRegisterClick}/>
           </section>
             <section id="témakörök">
-                <p className="text-neutral-500 text-2xl md:text-5xl max-w-7xl mx-auto mb-1 text-left ml-14 relative after:content-[''] after:absolute after:top-0 after:right-0 after:w-1/2 after:h-px after:bg-gradient-to-r after:from-amber-500 after:to-violet-600">
+                <p className="text-neutral-500 text-2xl md:text-5xl max-w-7xl mx-auto mb-1 text-left pl-6 xl:pl-24 relative after:content-[''] after:absolute after:top-0 after:right-0 after:w-1/2 after:h-px after:bg-gradient-to-r after:from-amber-500 after:to-violet-600">
   <span className="font-bold text-violet-600">
     Olvasd el,
   </span>{" "}
@@ -61,6 +62,7 @@ export default function Home() {
               onClose={() => setIsModalOpen(false)}
               initialScreen={initialModalScreen}
           />
+            <Footer/>
         </main>
       </div>
   );

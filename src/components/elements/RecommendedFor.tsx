@@ -11,13 +11,13 @@ export default function RecommendedFor() {
                         <div className="text-left">
                             <h2 className="text-3xl font-bold tracking-tight text-amber-500 sm:text-4xl">Kinek ajánljuk?</h2>
                             <p className="mt-6 text-lg leading-8 text-gray-900">
-                                Leginkább minden 10-12.-es gimnazistának, aki közép vagy emelt érettségire készül informatikából, illetve minden más diáknak, aki szeretne megtanulni alap szinten programozni és a Microsoft 365 termékeit kezelni. Természetesen egyetemistákat is szívesen látunk, akik nem az informatikai pályát választották, de szeretnének kicsit belekóstolni.
+                                Minden 10-12.-es gimnazistának, aki közép vagy emelt szintű érettségire készül informatikából, illetve minden más diáknak, aki szeretne megtanulni alapszinten programozni, a Microsoft 365 termékeit kezelni, adatbázisokkal dolgozni és weblapot szerkeszteni. Természetesen egyetemistákat is szívesen látunk, akik nem informatikai pályát választottak, viszont szeretnének egy kicsit belekóstolni.
                             </p>
                         </div>
                         <div className="text-right">
                             <h2 className="text-3xl font-bold tracking-tight text-amber-500 sm:text-4xl">Kiknek nem ajánljuk?</h2>
                             <p className="mt-6 text-lg leading-8 text-gray-900 text-justify">
-                                A kurzus valamennyire épít alap informatikai tudásra (maximum annyira amennyit az iskolákban megtanítanak), ezért 10.-es évfolyam alatt nem ajánljuk a részvételt, egyrészt, mert nem biztos, hogy megvan a kellő program ismeret, másrészt, messze van még az érettségi, inkább gyertek el jövőre / pár év múlva.
+                                A kurzus alapvető informatikai tudásra épít (legfeljebb annyira, amennyit általános-, illetve középiskolában megtanítanak), ezért 10. évfolyam alatt nem ajánljuk a részvételt, egyrészt, mert nem biztos, hogy rendelkezel a kellő programismerettel, másrészt messze van még az érettségi, inkább gyere el jövőre / néhány év múlva!
                             </p>
                         </div>
                     </div>

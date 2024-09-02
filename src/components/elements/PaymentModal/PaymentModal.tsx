@@ -425,9 +425,14 @@ const PaymentModal: React.FC<PaymentModalProps> = ({ isOpen, onClose, initialScr
                                                     )}
                                                     <p className="text-xs text-center text-gray-500">
                                                         A regisztrációval elfogadod az{' '}
-                                                        <Link href="/compliance"
+                                                        <Link href="/compliance" target={"_blank"}
                                                               className="text-violet-600 hover:underline">
-                                                            adatkezelési tájékoztatónkat
+                                                            adatkezelési tájékoztatónkat&nbsp;
+                                                        </Link>
+                                                        és az
+                                                        <Link href="/aszf" target={"_blank"}
+                                                              className="text-violet-600 hover:underline">
+                                                            &nbsp;ÁSZF-et
                                                         </Link>
                                                         .
                                                     </p>
