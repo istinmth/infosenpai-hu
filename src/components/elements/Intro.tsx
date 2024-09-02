@@ -86,7 +86,7 @@ export default function InstructorsIntro(): JSX.Element {
                 "Úgy gondolom, hogy akik kevésbé érdeklődnek a számítógépek iránt, azoknak is nagyon fontos, hogy alapvető tudást szerezzenek, mert az életünkben egyre meghatározóbb szerepet tölt be a számítógép, és aki nem tudja megfelelően használni, piaci hátrányba kerül.",
                 "Annak pedig, aki informatikai szakirányba szeretne továbbtanulni, sok érdekes történettel, tippel, tapasztalattal tudok szolgálni. Az egyetemen jelentősen magasabbak az elvárások, mint gimnáziumban, és ha nem elég felkészült az ember, jobban fenyegeti a lemorzsolódás. Segítünk nektek előretekinteni, így már nem lesz annyira új és bonyolult a tananyag."
             ],
-            imageSrc: "/AbelProfil.jpg"
+            imageSrc: "/AbelProfil.JPG"
         },
         {
             name: "István",
