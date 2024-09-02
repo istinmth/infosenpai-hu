@@ -43,15 +43,12 @@ export function Pricing() {
                     </li>
                 ))}
               </ul>
-              <p className="mt-28 text-sm text-black text-left font-semibold">
-                A teljes kurzus 20 + 1 óra összesen, az 1 óra az ingyenes próbaalkalom.
-              </p>
             </div>
             <div className="-mt-2 p-2 lg:mt-0 lg:w-full lg:max-w-md lg:flex-shrink-0">
               <div
                   className="rounded-2xl bg-gray-50 py-10 text-center ring-1 ring-inset ring-gray-900/5 lg:flex lg:flex-col lg:justify-center lg:py-16">
                 <div className="mx-auto max-w-xs px-8">
-                  <p className="text-base font-semibold text-gray-600">Az első előadás ingyenes, utána alkalmanként</p>
+                  <p className="text-base font-semibold text-gray-600">A próbaalkalom ingyenes, utána alkalmanként</p>
                   <p className="mt-6 flex items-baseline justify-center gap-x-2">
                     <span className="text-5xl font-bold tracking-tight text-gray-900">7500</span>
                     <span className="text-sm font-semibold leading-6 tracking-wide text-gray-600">Ft</span>
@@ -63,8 +60,8 @@ export function Pricing() {
                     Jelentkezem
                   </button>
                   <p className="mt-6 text-xs leading-5 text-gray-600">
-                    Lehetőséged lesz fizetni online, a jelentkezési folyamat végén, vagy a helyszínen. <br/> <span
-                      className="text-violet-600">Minden esetben számlát kapsz a vásárlásról.</span>
+                    Jelenleg csak az október 5-i próbaalkalomra lehet jelentkezni. <br/> <span
+                      className="text-violet-600">A teljes kurzus a próbaalkalmon kívül 20 alkalom hosszúságú.</span>
                   </p>
                 </div>
               </div>

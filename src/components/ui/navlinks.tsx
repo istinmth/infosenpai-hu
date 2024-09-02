@@ -16,7 +16,7 @@ export const Navbar = () => {
     const [isLoaded, setIsLoaded] = useState(false);
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
-    const links = ['főcím', 'témakörök', 'rólunk', 'miért mi?', 'jelentkezz!'];
+    const links = ['főcím', 'témakörök', 'oktatóinkról', 'miért mi?','kinek ajánljuk?', 'jelentkezz!'];
 
     const showNavbar = (duration: number, forceHide: boolean = false) => {
         setIsVisible(true);
