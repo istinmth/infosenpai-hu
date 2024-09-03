@@ -24,10 +24,13 @@ export default function Home() {
 
   return (
       <div>
-        <Head> <title>Alma</title> </Head>
-        <main>
-          <Navbar/>
-          <BoxesGrid/>
+          <Head>
+              <link rel="icon" href="/src/app/favicon.ico"/>
+                <title>InfoSenpai</title>
+          </Head>
+          <main>
+              <Navbar/>
+              <BoxesGrid/>
           <section id="főcím">
             <FlipWordsDemo onRegisterClick={handleRegisterClick}/>
           </section>
