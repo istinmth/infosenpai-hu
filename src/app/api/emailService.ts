@@ -12,7 +12,7 @@ export default async function sendConfirmationEmail(firstName: string, email: st
 
 <p>Rögzítettük a jelentkezésed a próbaalkalomra.</p>
 
-<p>Hamarosan egy új e-mailben értesítünk a pontos időpontról és helyszínről, sajnos ezt még mi sem tudjuk, azonban legkésőbb egy héttel az óra előtt jelentkezünk.</p>
+<p>Hamarosan egy új e-mailben értesítünk a pontos időpontról és helyszínről, melyekkel legkésőbb egy héttel az óra előtt jelentkezünk. Kérjük, hogy úgy készülj, hogy saját laptopra lesz szükséged az oktatáson.</p>
 
 <p>Ha bármi kérdés felmerült benned az órákkal, a tananyaggal, az oktatóinkkal vagy a weboldallal kapcsolatban, keress minket bátran, az <a href="mailto:info@infosenpai.hu">info@infosenpai.hu</a> címen!</p>
 
