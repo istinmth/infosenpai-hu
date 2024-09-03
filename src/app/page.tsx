@@ -32,7 +32,7 @@ export default function Home() {
             <FlipWordsDemo onRegisterClick={handleRegisterClick}/>
           </section>
             <section id="témakörök">
-                <p className="text-neutral-500 text-2xl md:text-5xl max-w-7xl mx-auto mb-1 text-left pl-6 xl:pl-24 relative after:content-[''] after:absolute after:top-0 after:right-0 after:w-1/2 after:h-px after:bg-gradient-to-r after:from-amber-500 after:to-violet-600">
+                <p className="text-neutral-500 text-3xl md:text-5xl max-w-7xl mx-auto mb-1 text-left pl-6 md:pl-16 xl:pl-24 relative after:content-[''] after:absolute after:top-0 after:right-0 after:w-1/2 after:h-px after:bg-gradient-to-r after:from-amber-500 after:to-violet-600">
   <span className="font-bold text-violet-600">
     Olvasd el,
   </span>{" "}
