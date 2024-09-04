@@ -33,7 +33,9 @@ export default function RootLayout({
     return (
         <html lang="hu" className="dark">
         <head>
-            <GoogleAnalytics />
+            <GoogleAnalytics/>
+            <meta property="og:image" content="public/og.png"/>
+            <title>InfoSenpai</title>
         </head>
         <body className={`${inter.className} bg-whitesmoke`}>{children}</body>
         </html>
