@@ -215,10 +215,10 @@ const PaymentModal: React.FC<PaymentModalProps> = ({ isOpen, onClose, initialScr
                         animate={{ scale: 1, opacity: 1 }}
                         exit={{ scale: 0.9, opacity: 0 }}
                         transition={{ duration: 0.3 }}
-                        className="bg-white rounded-lg shadow-xl w-full max-w-5xl h-[92vh] md:h-[80vh] overflow-hidden flex flex-col"
+                        className="bg-white rounded-lg shadow-xl w-full max-w-5xl max-h-[95vh] overflow-hidden flex flex-col"
                     >
                         <div className="p-4 md:p-6 flex-grow overflow-y-auto">
-                            <div className="flex justify-between items-center mb-4 md:mb-6">
+                            <div className="flex justify-between items-center p-2">
                                 <div className="w-[72px]">
                                     {currentScreen !== 'main' && (
                                         <button onClick={handleBack}
@@ -262,7 +262,7 @@ const PaymentModal: React.FC<PaymentModalProps> = ({ isOpen, onClose, initialScr
                                                         animate={{opacity: 1, y: 0}}
                                                         transition={{delay: index * 0.1}}
                                                         className={`bg-white border rounded-lg shadow-sm p-4 md:p-6 flex flex-col ${
-                                                            index === 1 ? 'md:scale-105 md:shadow-md' : ''
+                                                            index === 1 ? 'md:scale-105' : ''
                                                         } ${index === 0 ? 'border-violet-500' : ''}`}
                                                     >
                                                         <div className="md:text-left mb-2">
@@ -329,9 +329,9 @@ const PaymentModal: React.FC<PaymentModalProps> = ({ isOpen, onClose, initialScr
                                             animate="visible"
                                             exit="exit"
                                             transition={{duration: 0.3}}
-                                            className="absolute inset-0 flex flex-col w-full h-full"
+                                            className="absolute inset-0 flex flex-col w-full h-full justify-center"
                                         >
-                                            <div className="flex flex-col items-center justify-center mt-20">
+                                            <div className="flex flex-col items-center justify-center">
                                                 <div className="space-y-6 w-full max-w-md">
                                                     <h2 className="text-lg md:text-2xl font-bold text-violet-600">Regisztráció
                                                         a próbaalkalomra</h2>
