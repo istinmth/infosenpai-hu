@@ -58,7 +58,10 @@ const RegistrationDashboard: React.FC = () => {
                                 <SelectValue placeholder="Filter by Tier" />
                             </SelectTrigger>
                             <SelectContent>
-                                <SelectItem value="">All Tiers</SelectItem>
+                                <SelectItem value="all">All Tiers</SelectItem>
+                                <SelectItem value="first">Az első alkalom</SelectItem>
+                                <SelectItem value="four">4 Alkalom</SelectItem>
+                                <SelectItem value="twenty">20 Alkalom</SelectItem>
                             </SelectContent>
                         </Select>
                         <Select disabled>
@@ -66,7 +69,10 @@ const RegistrationDashboard: React.FC = () => {
                                 <SelectValue placeholder="Filter by Payment" />
                             </SelectTrigger>
                             <SelectContent>
-                                <SelectItem value="">All Statuses</SelectItem>
+                                <SelectItem value="all">All Statuses</SelectItem>
+                                <SelectItem value="completed">Completed</SelectItem>
+                                <SelectItem value="pending">Pending</SelectItem>
+                                <SelectItem value="na">N/A</SelectItem>
                             </SelectContent>
                         </Select>
                         <Button disabled className="bg-gray-300 cursor-not-allowed">
