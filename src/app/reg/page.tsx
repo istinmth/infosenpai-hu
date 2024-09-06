@@ -19,8 +19,8 @@ interface Registration {
 const RegistrationDashboard: React.FC = () => {
     const [registrations, setRegistrations] = useState<Registration[]>([]);
     const [searchTerm, setSearchTerm] = useState('');
-    const [filterTier, setFilterTier] = useState('');
-    const [filterPaymentStatus, setFilterPaymentStatus] = useState('');
+    const [filterTier, setFilterTier] = useState('all');
+    const [filterPaymentStatus, setFilterPaymentStatus] = useState('all');
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState<string | null>(null);
 
@@ -30,8 +30,8 @@ const RegistrationDashboard: React.FC = () => {
         try {
             const queryParams = new URLSearchParams({
                 ...(searchTerm && { search: searchTerm }),
-                ...(filterTier && { tier: filterTier }),
-                ...(filterPaymentStatus && { paymentStatus: filterPaymentStatus }),
+                ...(filterTier !== 'all' && { tier: filterTier }),
+                ...(filterPaymentStatus !== 'all' && { paymentStatus: filterPaymentStatus }),
             });
             const response = await fetch(`/api/registrations?${queryParams}`);
             if (!response.ok) {
@@ -86,7 +86,7 @@ const RegistrationDashboard: React.FC = () => {
                                 <SelectValue placeholder="Filter by Tier" />
                             </SelectTrigger>
                             <SelectContent className="bg-gray-800 text-white">
-                                <SelectItem value="">All Tiers</SelectItem>
+                                <SelectItem value="all">All Tiers</SelectItem>
                                 <SelectItem value="Az első alkalom">Az első alkalom</SelectItem>
                                 <SelectItem value="4 Alkalom">4 Alkalom</SelectItem>
                                 <SelectItem value="20 Alkalom">20 Alkalom</SelectItem>
@@ -97,7 +97,7 @@ const RegistrationDashboard: React.FC = () => {
                                 <SelectValue placeholder="Filter by Payment" />
                             </SelectTrigger>
                             <SelectContent className="bg-gray-800 text-white">
-                                <SelectItem value="">All Statuses</SelectItem>
+                                <SelectItem value="all">All Statuses</SelectItem>
                                 <SelectItem value="completed">Completed</SelectItem>
                                 <SelectItem value="pending">Pending</SelectItem>
                                 <SelectItem value="N/A">N/A</SelectItem>
