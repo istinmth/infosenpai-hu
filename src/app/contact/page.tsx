@@ -2,10 +2,14 @@
 import React from 'react';
 import { Card, CardContent } from '@/components/ui/card';
 import { MapPin, Mail, Phone, Clock } from 'lucide-react';
+import Link from 'next/link';
 
 const ContactsPage: React.FC = () => {
     return (
         <div className="bg-background min-h-screen flex items-center justify-center p-4">
+            <Link href="/" className="self-start mb-4 text-violet-600 hover:text-violet-800 transition-colors">
+                ← Vissza a főoldalra
+            </Link>
             <Card className="w-full max-w-2xl shadow-none border-none">
                 <CardContent className="space-y-8 p-0">
                     <h1 className="text-4xl font-bold mb-8">Kapcsolat</h1>

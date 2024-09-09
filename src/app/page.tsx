@@ -10,6 +10,7 @@ import AbelIntro from "@/components/elements/Intro";
 import { useState } from 'react';
 import PaymentModal from "@/components/elements/PaymentModal/PaymentModal";
 import RecommendedFor from "@/components/elements/RecommendedFor";
+import {Navbar} from "@/components/ui/navlinks";
 
 export default function Home() {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -27,6 +28,7 @@ export default function Home() {
                 <title>InfoSenpai</title>
           </Head>
           <main>
+            <Navbar/>
               <BoxesGrid/>
           <section id="főcím">
             <FlipWordsDemo onRegisterClick={handleRegisterClick}/>

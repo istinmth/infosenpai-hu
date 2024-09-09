@@ -3,8 +3,6 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import GoogleAnalytics from '@/components/elements/GoogleAnalytics';
 import Footer from "@/components/elements/Footer";
-import { Navbar } from "@/components/ui/navlinks"
-
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
@@ -39,7 +37,6 @@ export default function RootLayout({
             <meta property="og:image" content="public/og.png"/>
             <title>InfoSenpai</title>
         </head>
-        <Navbar/>
         <body className={`${inter.className} bg-whitesmoke`}>{children}</body>
         <Footer/>
         </html>
