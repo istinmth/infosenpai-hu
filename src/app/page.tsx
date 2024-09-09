@@ -5,13 +5,11 @@ import { FlipWordsDemo } from "@/components/elements/Header";
 import { AboutSection } from "@/components/elements/About";
 import { BoxesGrid } from "@/components/ui/boxes-grid";
 import { Pricing } from "@/components/elements/Pricing";
-import { Navbar } from "@/components/ui/navlinks"
 import { BentoGrid } from "@/components/ui/bento-grid";
 import AbelIntro from "@/components/elements/Intro";
 import { useState } from 'react';
 import PaymentModal from "@/components/elements/PaymentModal/PaymentModal";
 import RecommendedFor from "@/components/elements/RecommendedFor";
-import {JelentkezzSzoveg} from "@/components/elements/JelentkezzSzoveg";
 
 export default function Home() {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -29,7 +27,6 @@ export default function Home() {
                 <title>InfoSenpai</title>
           </Head>
           <main>
-              <Navbar/>
               <BoxesGrid/>
           <section id="főcím">
             <FlipWordsDemo onRegisterClick={handleRegisterClick}/>
@@ -51,9 +48,6 @@ export default function Home() {
             </section>
             <section id="miért mi?">
                 <AboutSection/>
-            </section>
-            <section id="jelentkezz!">
-                <JelentkezzSzoveg/>
             </section>
             <section id="kinek ajánljuk?">
                 <RecommendedFor/>
