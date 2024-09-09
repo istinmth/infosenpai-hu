@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
 import GoogleAnalytics from '@/components/elements/GoogleAnalytics';
+import Footer from "@/components/elements/Footer";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -38,6 +39,7 @@ export default function RootLayout({
             <title>InfoSenpai</title>
         </head>
         <body className={`${inter.className} bg-whitesmoke`}>{children}</body>
+        <Footer/>
         </html>
     );
 }
