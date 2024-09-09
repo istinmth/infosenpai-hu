@@ -11,7 +11,7 @@ import AbelIntro from "@/components/elements/Intro";
 import { useState } from 'react';
 import PaymentModal from "@/components/elements/PaymentModal/PaymentModal";
 import RecommendedFor from "@/components/elements/RecommendedFor";
-import Footer from "@/components/elements/Footer";
+import {JelentkezzSzoveg} from "@/components/elements/JelentkezzSzoveg";
 
 export default function Home() {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -52,6 +52,9 @@ export default function Home() {
             <section id="miért mi?">
                 <AboutSection/>
             </section>
+            <section id="jelentkezz!">
+                <JelentkezzSzoveg/>
+            </section>
             <section id="kinek ajánljuk?">
                 <RecommendedFor/>
             </section>
@@ -65,7 +68,6 @@ export default function Home() {
               onClose={() => setIsModalOpen(false)}
               initialScreen={initialModalScreen}
           />
-            <Footer/>
         </main>
       </div>
   );
