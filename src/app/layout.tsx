@@ -4,6 +4,7 @@ import "./globals.css";
 import GoogleAnalytics from '@/components/elements/GoogleAnalytics';
 import Footer from "@/components/elements/Footer";
 const inter = Inter({ subsets: ["latin"] });
+import { Analytics } from "@vercel/analytics/react"
 
 export const metadata: Metadata = {
     title: 'InfoSenpai',
@@ -15,7 +16,7 @@ export const metadata: Metadata = {
         siteName: 'InfoSenpai',
         images: [
             {
-                url: '/public/og.png',
+                url: 'https://www.infosenpai.hu/og.png',
                 width: 851,
                 height: 315,
             },
@@ -34,7 +35,7 @@ export default function RootLayout({
         <html lang="hu" className="light">
         <head>
             <GoogleAnalytics/>
-            <meta property="og:image" content="public/og.png"/>
+            <meta property="og:image" content="https://www.infosenpai.hu/og.png"/>
             <title>InfoSenpai</title>
         </head>
         <body className={`${inter.className} bg-whitesmoke`}>{children}</body>
