@@ -15,9 +15,9 @@ export const metadata: Metadata = {
         siteName: 'InfoSenpai',
         images: [
             {
-                url: 'https://www.infosenpai.hu/_next/image?url=%2Fujkep.png&w=1920&q=75',
-                width: 800,
-                height: 600,
+                url: '/public/og.png',
+                width: 851,
+                height: 315,
             },
         ],
         locale: 'hu_HU',
@@ -31,13 +31,14 @@ export default function RootLayout({
     children: React.ReactNode;
 }>) {
     return (
-        <html lang="hu" className="dark">
+        <html lang="hu">
         <head>
             <GoogleAnalytics/>
-            <meta property="og:image" content="public/og.png"/>
+            <meta property="og:image" content="/og.png"/>
             <title>InfoSenpai</title>
         </head>
-        <body className={`${inter.className} bg-whitesmoke`}>{children}</body>
+        <body className={`${inter.className} bg-background`}>
+        </body>
         </html>
     );
 }
