@@ -48,7 +48,7 @@ const ContactsPage: React.FC = () => {
                                 <iframe
                                     src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2695.957398788972!2d19.057869215944736!3d47.48480831337224!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x4741dc50fe02e987%3A0x37cc812f715298d3!2sCorvinus%20University%20Building%20C!5e0!3m2!1sen!2shu!4v1631234567890!5m2!1sen!2shu"
                                     width="100%"
-                                    height="450"
+                                    height="250"
                                     style={{border:0}}
                                     allowFullScreen={false}
                                     loading="lazy"
