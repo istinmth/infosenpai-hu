@@ -31,14 +31,13 @@ export default function RootLayout({
     children: React.ReactNode;
 }>) {
     return (
-        <html lang="hu">
+        <html lang="hu" className="light">
         <head>
             <GoogleAnalytics/>
-            <meta property="og:image" content="/og.png"/>
+            <meta property="og:image" content="public/og.png"/>
             <title>InfoSenpai</title>
         </head>
-        <body className={`${inter.className} bg-background`}>
-        </body>
+        <body className={`${inter.className} bg-whitesmoke`}>{children}</body>
         </html>
     );
 }
