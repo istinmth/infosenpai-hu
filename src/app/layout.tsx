@@ -5,6 +5,7 @@ import GoogleAnalytics from '@/components/elements/GoogleAnalytics';
 import Footer from "@/components/elements/Footer";
 const inter = Inter({ subsets: ["latin"] });
 import { Analytics } from "@vercel/analytics/react"
+import { SpeedInsights } from "@vercel/speed-insights/next"
 
 export const metadata: Metadata = {
     title: 'InfoSenpai',
@@ -35,6 +36,8 @@ export default function RootLayout({
         <html lang="hu" className="light">
         <head>
             <GoogleAnalytics/>
+            <Analytics />
+            <SpeedInsights />
             <meta property="og:image" content="https://www.infosenpai.hu/og.png"/>
             <title>InfoSenpai</title>
         </head>
