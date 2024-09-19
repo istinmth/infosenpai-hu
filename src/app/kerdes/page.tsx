@@ -9,6 +9,11 @@ import { motion, AnimatePresence } from 'framer-motion';
 
 const CSV_FILE_PATH = '/iskolak.csv';
 
+// Function to normalize text for search
+const normalizeText = (text: string): string => {
+    return text.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
+};
+
 export default function SchoolSelector() {
     const [schools, setSchools] = useState<string[]>([]);
     const [searchTerm, setSearchTerm] = useState('');
@@ -38,7 +43,7 @@ export default function SchoolSelector() {
     }, []);
 
     const filteredSchools = schools.filter(school =>
-        school.toLowerCase().includes(searchTerm.toLowerCase())
+        normalizeText(school).includes(normalizeText(searchTerm))
     );
 
     const handleSubmit = async () => {
